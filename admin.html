@@ -22,20 +22,28 @@
             padding: 0;
         }
 
+
         body {
 
-            font-family: Arial, Helvetica, sans-serif;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
 
             min-height: 100vh;
 
-            background: #020403;
+            background:
+                #020403;
 
-            color: white;
+            color:
+                white;
 
         }
 
 
-        /* LOGIN */
+        /* ========================================
+           LOGIN
+        ======================================== */
 
         #login {
 
@@ -62,29 +70,36 @@
 
             border-radius: 20px;
 
-            background: #07120c;
+            background:
+                #07120c;
 
-            border: 1px solid rgba(80,255,140,.2);
+            border:
+                1px solid rgba(80,255,140,.2);
 
-            box-shadow: 0 20px 60px rgba(0,0,0,.5);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.5);
 
         }
 
 
         .login-box h1 {
 
-            color: #5cff98;
+            color:
+                #5cff98;
 
-            margin-bottom: 10px;
+            margin-bottom:
+                10px;
 
         }
 
 
         .login-box p {
 
-            color: #999;
+            color:
+                #999;
 
-            margin-bottom: 25px;
+            margin-bottom:
+                25px;
 
         }
 
@@ -92,331 +107,868 @@
         input,
         textarea {
 
-            width: 100%;
+            width:
+                100%;
 
-            padding: 13px;
+            padding:
+                13px;
 
-            margin-bottom: 12px;
+            margin-bottom:
+                12px;
 
-            border-radius: 10px;
+            border-radius:
+                10px;
 
-            border: 1px solid rgba(255,255,255,.12);
+            border:
+                1px solid rgba(255,255,255,.12);
 
-            background: #020604;
+            background:
+                #020604;
 
-            color: white;
+            color:
+                white;
 
-            outline: none;
+            outline:
+                none;
+
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            border-color:
+                rgba(80,255,140,.5);
 
         }
 
 
         textarea {
 
-            resize: none;
+            resize:
+                none;
 
-            height: 80px;
+            height:
+                80px;
 
         }
 
 
         button {
 
-            border: none;
+            border:
+                none;
 
-            border-radius: 10px;
+            border-radius:
+                10px;
 
-            padding: 12px 18px;
+            padding:
+                12px 18px;
 
-            cursor: pointer;
+            cursor:
+                pointer;
 
-            font-weight: bold;
+            font-weight:
+                bold;
 
         }
 
 
         .login-button {
 
-            width: 100%;
+            width:
+                100%;
 
-            background: #36e875;
+            background:
+                #36e875;
 
-            color: #001b09;
+            color:
+                #001b09;
+
+        }
+
+
+        .login-button:hover {
+
+            background:
+                #5cff98;
 
         }
 
 
         #loginError {
 
-            color: #ff7777;
+            color:
+                #ff7777;
 
-            margin-top: 12px;
+            margin-top:
+                12px;
 
-            font-size: 13px;
+            font-size:
+                13px;
 
         }
 
 
-        /* PAINEL */
+
+        /* ========================================
+           PAINEL
+        ======================================== */
 
         #painel {
 
-            display: none;
+            display:
+                none;
 
-            min-height: 100vh;
+            min-height:
+                100vh;
 
         }
 
 
         .topbar {
 
-            height: 70px;
+            height:
+                70px;
 
-            display: flex;
+            display:
+                flex;
 
-            align-items: center;
+            align-items:
+                center;
 
-            justify-content: space-between;
+            justify-content:
+                space-between;
 
-            padding: 0 25px;
+            padding:
+                0 25px;
 
-            background: #07120c;
+            background:
+                #07120c;
 
-            border-bottom: 1px solid rgba(80,255,140,.15);
+            border-bottom:
+                1px solid rgba(80,255,140,.15);
 
         }
 
 
         .logo {
 
-            color: #5cff98;
+            color:
+                #5cff98;
 
-            font-size: 20px;
+            font-size:
+                20px;
 
-            font-weight: bold;
+            font-weight:
+                bold;
 
-            letter-spacing: 3px;
+            letter-spacing:
+                3px;
+
+        }
+
+
+        .topbar-info {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+
+        }
+
+
+        .admin-online {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+            color:
+                #75ffab;
+
+            font-size:
+                12px;
+
+        }
+
+
+        .online-dot {
+
+            width:
+                8px;
+
+            height:
+                8px;
+
+            border-radius:
+                50%;
+
+            background:
+                #36e875;
+
+            box-shadow:
+                0 0 10px #36e875;
 
         }
 
 
         .logout {
 
-            background: rgba(255,255,255,.08);
+            background:
+                rgba(255,255,255,.08);
 
-            color: #aaa;
+            color:
+                #aaa;
 
         }
 
+
+        .logout:hover {
+
+            background:
+                rgba(255,255,255,.14);
+
+            color:
+                white;
+
+        }
+
+
+
+        /* ========================================
+           LAYOUT
+        ======================================== */
 
         .layout {
 
-            display: grid;
+            display:
+                grid;
 
-            grid-template-columns: 320px 1fr;
+            grid-template-columns:
+                350px 1fr;
 
-            height: calc(100vh - 70px);
+            height:
+                calc(100vh - 70px);
 
         }
 
 
-        /* LISTA */
+
+        /* ========================================
+           LISTA
+        ======================================== */
 
         .atendimentos {
 
-            border-right: 1px solid rgba(255,255,255,.08);
+            border-right:
+                1px solid rgba(255,255,255,.08);
 
-            overflow-y: auto;
+            overflow-y:
+                auto;
 
-            background: #030805;
+            background:
+                #030805;
+
+        }
+
+
+        .lista-header {
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.06);
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            background:
+                #030805;
+
+            z-index:
+                2;
 
         }
 
 
         .lista-titulo {
 
-            padding: 20px;
+            color:
+                #aaa;
 
-            color: #aaa;
+            font-size:
+                12px;
 
-            font-size: 13px;
+            letter-spacing:
+                1px;
+
+            margin-bottom:
+                10px;
+
+        }
+
+
+        .contador {
+
+            color:
+                #5cff98;
+
+            font-size:
+                13px;
 
         }
 
 
         .atendimento {
 
-            padding: 18px;
+            padding:
+                17px 18px;
 
-            border-top: 1px solid rgba(255,255,255,.05);
+            border-top:
+                1px solid rgba(255,255,255,.05);
 
-            cursor: pointer;
+            cursor:
+                pointer;
+
+            transition:
+                .2s;
+
+            position:
+                relative;
 
         }
 
 
         .atendimento:hover {
 
-            background: rgba(80,255,140,.06);
+            background:
+                rgba(80,255,140,.06);
 
         }
 
 
-        .atendimento strong {
+        .atendimento.selecionado {
 
-            display: block;
+            background:
+                rgba(80,255,140,.10);
 
-            margin-bottom: 6px;
-
-        }
-
-
-        .status {
-
-            color: #5cff98;
-
-            font-size: 12px;
+            border-left:
+                3px solid #5cff98;
 
         }
 
 
-        /* CHAT */
+        .atendimento-nome {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            margin-bottom:
+                9px;
+
+        }
+
+
+        .atendimento-nome strong {
+
+            overflow:
+                hidden;
+
+            text-overflow:
+                ellipsis;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .badge {
+
+            font-size:
+                10px;
+
+            padding:
+                4px 7px;
+
+            border-radius:
+                20px;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .badge.aguardando {
+
+            background:
+                rgba(255,190,60,.12);
+
+            color:
+                #ffc85c;
+
+        }
+
+
+        .badge.atendimento {
+
+            background:
+                rgba(54,232,117,.12);
+
+            color:
+                #5cff98;
+
+        }
+
+
+        .badge.encerrado {
+
+            background:
+                rgba(255,255,255,.08);
+
+            color:
+                #777;
+
+        }
+
+
+        .atendimento-info {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                5px;
+
+            color:
+                #888;
+
+            font-size:
+                12px;
+
+        }
+
+
+        .atendimento-info span {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                6px;
+
+        }
+
+
+        .atendimento-info .atendente {
+
+            color:
+                #aaa;
+
+        }
+
+
+
+        /* ========================================
+           CHAT
+        ======================================== */
 
         .chat {
 
-            display: flex;
+            display:
+                flex;
 
-            flex-direction: column;
+            flex-direction:
+                column;
+
+            min-width:
+                0;
 
         }
 
 
         .chat-top {
 
-            padding: 20px;
+            padding:
+                17px 22px;
 
-            border-bottom: 1px solid rgba(255,255,255,.08);
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+            background:
+                rgba(7,18,12,.7);
 
         }
 
 
-        .chat-top span {
+        .chat-cliente {
 
-            color: #5cff98;
+            display:
+                flex;
 
-            font-size: 12px;
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+        }
+
+
+        .cliente-avatar {
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            border-radius:
+                50%;
+
+            background:
+                #102219;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                18px;
+
+        }
+
+
+        .cliente-dados strong {
+
+            display:
+                block;
+
+            margin-bottom:
+                4px;
+
+        }
+
+
+        .cliente-dados span {
+
+            color:
+                #5cff98;
+
+            font-size:
+                12px;
 
         }
 
 
         #adminMessages {
 
-            flex: 1;
+            flex:
+                1;
 
-            overflow-y: auto;
+            overflow-y:
+                auto;
 
-            padding: 25px;
+            padding:
+                25px;
 
         }
 
 
         .msg {
 
-            max-width: 70%;
+            max-width:
+                70%;
 
-            padding: 12px 15px;
+            padding:
+                12px 15px;
 
-            margin-bottom: 12px;
+            margin-bottom:
+                12px;
 
-            border-radius: 15px;
+            border-radius:
+                15px;
 
-            line-height: 1.5;
+            line-height:
+                1.5;
+
+            white-space:
+                pre-wrap;
+
+            word-break:
+                break-word;
 
         }
 
 
         .msg.cliente {
 
-            background: #18231d;
+            background:
+                #18231d;
 
-            margin-right: auto;
+            margin-right:
+                auto;
+
+            border-bottom-left-radius:
+                4px;
 
         }
 
 
         .msg.atendente {
 
-            background: #216b3d;
+            background:
+                #216b3d;
 
-            margin-left: auto;
+            margin-left:
+                auto;
+
+            border-bottom-right-radius:
+                4px;
+
+        }
+
+
+        .msg-horario {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            font-size:
+                10px;
+
+            opacity:
+                .5;
 
         }
 
 
         .resposta {
 
-            display: flex;
+            display:
+                flex;
 
-            gap: 10px;
+            gap:
+                10px;
 
-            padding: 15px;
+            padding:
+                15px;
 
-            border-top: 1px solid rgba(255,255,255,.08);
+            border-top:
+                1px solid rgba(255,255,255,.08);
+
+            background:
+                #030805;
 
         }
 
 
         .resposta textarea {
 
-            margin: 0;
+            margin:
+                0;
 
-            height: 55px;
+            height:
+                55px;
+
+            flex:
+                1;
 
         }
 
 
         .enviar {
 
-            background: #36e875;
+            background:
+                #36e875;
 
-            color: #001b09;
+            color:
+                #001b09;
 
-            min-width: 90px;
+            min-width:
+                90px;
+
+        }
+
+
+        .enviar:hover {
+
+            background:
+                #5cff98;
 
         }
 
 
         .encerrar {
 
-            background: rgba(255,80,80,.12);
+            background:
+                rgba(255,80,80,.12);
 
-            color: #ff8a8a;
+            color:
+                #ff8a8a;
 
-            margin: 0 15px 15px;
+            margin:
+                0 15px 15px;
+
+        }
+
+
+        .encerrar:hover {
+
+            background:
+                rgba(255,80,80,.20);
+
+        }
+
+
+        .encerrar:disabled,
+        .enviar:disabled {
+
+            opacity:
+                .4;
+
+            cursor:
+                not-allowed;
 
         }
 
 
         .vazio {
 
-            color: #666;
+            color:
+                #666;
 
-            padding: 25px;
+            padding:
+                25px;
+
+            text-align:
+                center;
 
         }
 
+
+
+        /* ========================================
+           SCROLLBAR
+        ======================================== */
+
+        ::-webkit-scrollbar {
+
+            width:
+                7px;
+
+        }
+
+
+        ::-webkit-scrollbar-track {
+
+            background:
+                #020403;
+
+        }
+
+
+        ::-webkit-scrollbar-thumb {
+
+            background:
+                #173622;
+
+            border-radius:
+                10px;
+
+        }
+
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background:
+                #245536;
+
+        }
+
+
+
+        /* ========================================
+           MOBILE
+        ======================================== */
 
         @media (max-width: 700px) {
 
             .layout {
 
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
 
             }
 
+
             .atendimentos {
 
-                display: none;
+                display:
+                    none;
+
+            }
+
+
+            .topbar {
+
+                padding:
+                    0 15px;
+
+            }
+
+
+            .admin-online {
+
+                display:
+                    none;
+
+            }
+
+
+            .msg {
+
+                max-width:
+                    85%;
 
             }
 
@@ -430,13 +982,17 @@
 <body>
 
 
-    <!-- LOGIN -->
+    <!-- ========================================
+         LOGIN
+    ======================================== -->
 
     <section id="login">
 
         <div class="login-box">
 
-            <h1>YUKI STUDIO</h1>
+            <h1>
+                YUKI STUDIO
+            </h1>
 
             <p>
                 Painel de atendimento
@@ -473,9 +1029,14 @@
 
 
 
-    <!-- PAINEL -->
+    <!-- ========================================
+         PAINEL
+    ======================================== -->
 
     <section id="painel">
+
+
+        <!-- TOPBAR -->
 
         <header class="topbar">
 
@@ -484,26 +1045,53 @@
             </div>
 
 
-            <button
-                class="logout"
-                onclick="logout()"
-            >
-                Sair
-            </button>
+            <div class="topbar-info">
+
+                <div class="admin-online">
+
+                    <span class="online-dot"></span>
+
+                    Online
+
+                </div>
+
+
+                <button
+                    class="logout"
+                    onclick="logout()"
+                >
+                    Sair
+                </button>
+
+            </div>
 
         </header>
+
 
 
         <main class="layout">
 
 
-            <!-- ATENDIMENTOS -->
+            <!-- ====================================
+                 LISTA DE ATENDIMENTOS
+            ===================================== -->
 
             <aside class="atendimentos">
 
-                <div class="lista-titulo">
 
-                    ATENDIMENTOS
+                <div class="lista-header">
+
+                    <div class="lista-titulo">
+                        ATENDIMENTOS
+                    </div>
+
+
+                    <div
+                        class="contador"
+                        id="contadorAtendimentos"
+                    >
+                        0 atendimentos
+                    </div>
 
                 </div>
 
@@ -522,24 +1110,43 @@
 
 
 
-            <!-- CHAT -->
+            <!-- ====================================
+                 CHAT
+            ===================================== -->
 
             <section class="chat">
 
 
                 <div class="chat-top">
 
-                    <strong id="clienteNome">
-                        Selecione um atendimento
-                    </strong>
+                    <div class="chat-cliente">
 
-                    <br>
 
-                    <span id="clienteStatus">
-                        Aguardando seleção
-                    </span>
+                        <div
+                            class="cliente-avatar"
+                            id="clienteAvatar"
+                        >
+                            👤
+                        </div>
+
+
+                        <div class="cliente-dados">
+
+                            <strong id="clienteNome">
+                                Selecione um atendimento
+                            </strong>
+
+
+                            <span id="clienteStatus">
+                                Aguardando seleção
+                            </span>
+
+                        </div>
+
+                    </div>
 
                 </div>
+
 
 
                 <div id="adminMessages">
@@ -554,12 +1161,16 @@
                 </div>
 
 
+
                 <button
                     class="encerrar"
+                    id="botaoEncerrar"
                     onclick="encerrarAdmin()"
+                    disabled
                 >
                     ✓ Encerrar atendimento
                 </button>
+
 
 
                 <div class="resposta">
@@ -567,12 +1178,15 @@
                     <textarea
                         id="resposta"
                         placeholder="Digite sua resposta..."
+                        disabled
                     ></textarea>
 
 
                     <button
                         class="enviar"
+                        id="botaoEnviar"
                         onclick="enviarResposta()"
+                        disabled
                     >
                         Enviar
                     </button>
@@ -590,6 +1204,11 @@
 
 <script>
 
+
+/* =========================================
+   SUPABASE
+========================================= */
+
 const SUPABASE_URL =
     "https://moaeniuahyipcklspjbs.supabase.co";
 
@@ -605,41 +1224,54 @@ const db =
     );
 
 
-let atendimentoSelecionado = null;
+let atendimentoSelecionado =
+    null;
 
-let canalAdmin = null;
+let canalAdmin =
+    null;
 
 
 
-/* ============================== */
-/* LOGIN                          */
-/* ============================== */
+/* =========================================
+   LOGIN
+========================================= */
 
 async function login() {
 
     const email =
-        document.getElementById("email").value.trim();
+        document
+            .getElementById("email")
+            .value
+            .trim();
 
 
     const senha =
-        document.getElementById("senha").value;
+        document
+            .getElementById("senha")
+            .value;
 
 
     const erro =
-        document.getElementById("loginError");
+        document
+            .getElementById("loginError");
 
 
-    erro.textContent = "";
+    erro.textContent =
+        "";
 
 
-    const { data, error } =
-        await db.auth.signInWithPassword({
+    const {
+        data,
+        error
+    } = await db.auth.signInWithPassword({
 
-            email: email,
+        email:
+            email,
 
-            password: senha
+        password:
+            senha
 
-        });
+    });
 
 
     if (error) {
@@ -652,11 +1284,15 @@ async function login() {
     }
 
 
-    document.getElementById("login").style.display =
+    document
+        .getElementById("login")
+        .style.display =
         "none";
 
 
-    document.getElementById("painel").style.display =
+    document
+        .getElementById("painel")
+        .style.display =
         "block";
 
 
@@ -666,13 +1302,26 @@ async function login() {
 
 
 
-/* ============================== */
-/* LOGOUT                         */
-/* ============================== */
+/* =========================================
+   LOGOUT
+========================================= */
 
 async function logout() {
 
+    if (canalAdmin) {
+
+        await db.removeChannel(
+            canalAdmin
+        );
+
+        canalAdmin =
+            null;
+
+    }
+
+
     await db.auth.signOut();
+
 
     location.reload();
 
@@ -680,9 +1329,9 @@ async function logout() {
 
 
 
-/* ============================== */
-/* CARREGAR ATENDIMENTOS          */
-/* ============================== */
+/* =========================================
+   CARREGAR ATENDIMENTOS
+========================================= */
 
 async function carregarAtendimentos() {
 
@@ -700,14 +1349,18 @@ async function carregarAtendimentos() {
         .order(
             "criado_em",
             {
-                ascending: false
+                ascending:
+                    false
             }
         );
 
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Erro ao carregar atendimentos:",
+            error
+        );
 
         return;
 
@@ -720,7 +1373,23 @@ async function carregarAtendimentos() {
         );
 
 
-    lista.innerHTML = "";
+    lista.innerHTML =
+        "";
+
+
+    const contador =
+        document.getElementById(
+            "contadorAtendimentos"
+        );
+
+
+    contador.textContent =
+        data.length +
+        (
+            data.length === 1
+                ? " atendimento"
+                : " atendimentos"
+        );
 
 
     if (!data.length) {
@@ -746,15 +1415,107 @@ async function carregarAtendimentos() {
                 "atendimento";
 
 
+            if (
+                atendimentoSelecionado &&
+                atendimentoSelecionado.id ===
+                atendimento.id
+            ) {
+
+                item.classList.add(
+                    "selecionado"
+                );
+
+            }
+
+
+            const status =
+                atendimento.status ||
+                "aguardando";
+
+
+            let textoStatus =
+                "Aguardando";
+
+
+            let classeStatus =
+                "aguardando";
+
+
+            if (
+                status ===
+                "em_atendimento"
+            ) {
+
+                textoStatus =
+                    "Em atendimento";
+
+                classeStatus =
+                    "atendimento";
+
+            }
+
+
+            if (
+                status ===
+                "encerrado"
+            ) {
+
+                textoStatus =
+                    "Encerrado";
+
+                classeStatus =
+                    "encerrado";
+
+            }
+
+
+            const dataFormatada =
+                formatarData(
+                    atendimento.criado_em
+                );
+
+
+            const atendente =
+                atendimento.atendente ||
+                "Aguardando";
+
+
             item.innerHTML = `
 
-                <strong>
-                    ${atendimento.cliente_nome}
-                </strong>
+                <div class="atendimento-nome">
 
-                <span class="status">
-                    ● ${atendimento.status}
-                </span>
+                    <strong>
+                        ${escaparHTML(
+                            atendimento.cliente_nome ||
+                            "Cliente"
+                        )}
+                    </strong>
+
+                    <span
+                        class="badge ${classeStatus}"
+                    >
+                        ${textoStatus}
+                    </span>
+
+                </div>
+
+
+                <div class="atendimento-info">
+
+                    <span>
+                        🧑‍💼
+                        ${escaparHTML(
+                            atendente
+                        )}
+                    </span>
+
+
+                    <span>
+                        🕐
+                        ${dataFormatada}
+                    </span>
+
+                </div>
 
             `;
 
@@ -765,7 +1526,9 @@ async function carregarAtendimentos() {
                 );
 
 
-            lista.appendChild(item);
+            lista.appendChild(
+                item
+            );
 
         }
     );
@@ -777,9 +1540,9 @@ async function carregarAtendimentos() {
 
 
 
-/* ============================== */
-/* ABRIR ATENDIMENTO               */
-/* ============================== */
+/* =========================================
+   ABRIR ATENDIMENTO
+========================================= */
 
 async function abrirAtendimento(
     atendimento
@@ -792,26 +1555,93 @@ async function abrirAtendimento(
     document.getElementById(
         "clienteNome"
     ).textContent =
-        atendimento.cliente_nome;
+        atendimento.cliente_nome ||
+        "Cliente";
+
+
+    const status =
+        atendimento.status ||
+        "aguardando";
+
+
+    let textoStatus =
+        "🟡 Aguardando";
+
+
+    if (
+        status ===
+        "em_atendimento"
+    ) {
+
+        textoStatus =
+            "🟢 Em atendimento";
+
+    }
+
+
+    if (
+        status ===
+        "encerrado"
+    ) {
+
+        textoStatus =
+            "⚫ Encerrado";
+
+    }
 
 
     document.getElementById(
         "clienteStatus"
     ).textContent =
-        atendimento.status;
+        textoStatus;
 
 
-    carregarMensagens(
+    document.getElementById(
+        "clienteAvatar"
+    ).textContent =
+        atendimento.atendente ===
+        "Atendente 2"
+            ? "👨‍💻"
+            : "🧑‍💻";
+
+
+    const encerrado =
+        status ===
+        "encerrado";
+
+
+    document.getElementById(
+        "resposta"
+    ).disabled =
+        encerrado;
+
+
+    document.getElementById(
+        "botaoEnviar"
+    ).disabled =
+        encerrado;
+
+
+    document.getElementById(
+        "botaoEncerrar"
+    ).disabled =
+        encerrado;
+
+
+    await carregarMensagens(
         atendimento.id
     );
+
+
+    carregarAtendimentos();
 
 }
 
 
 
-/* ============================== */
-/* CARREGAR MENSAGENS              */
-/* ============================== */
+/* =========================================
+   CARREGAR MENSAGENS
+========================================= */
 
 async function carregarMensagens(
     atendimentoId
@@ -836,14 +1666,18 @@ async function carregarMensagens(
         .order(
             "criado_em",
             {
-                ascending: true
+                ascending:
+                    true
             }
         );
 
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Erro ao carregar mensagens:",
+            error
+        );
 
         return;
 
@@ -856,7 +1690,18 @@ async function carregarMensagens(
         );
 
 
-    area.innerHTML = "";
+    area.innerHTML =
+        "";
+
+
+    if (!data.length) {
+
+        area.innerHTML =
+            '<div class="vazio">Nenhuma mensagem ainda.</div>';
+
+        return;
+
+    }
 
 
     data.forEach(
@@ -877,9 +1722,9 @@ async function carregarMensagens(
 
 
 
-/* ============================== */
-/* MOSTRAR MENSAGEM                */
-/* ============================== */
+/* =========================================
+   MOSTRAR MENSAGEM
+========================================= */
 
 function mostrarMensagemAdmin(
     mensagem
@@ -911,7 +1756,36 @@ function mostrarMensagemAdmin(
         mensagem.mensagem;
 
 
-    area.appendChild(div);
+    if (
+        mensagem.criado_em
+    ) {
+
+        const horario =
+            document.createElement(
+                "span"
+            );
+
+
+        horario.className =
+            "msg-horario";
+
+
+        horario.textContent =
+            formatarHora(
+                mensagem.criado_em
+            );
+
+
+        div.appendChild(
+            horario
+        );
+
+    }
+
+
+    area.appendChild(
+        div
+    );
 
 
     area.scrollTop =
@@ -921,13 +1795,25 @@ function mostrarMensagemAdmin(
 
 
 
-/* ============================== */
-/* ENVIAR RESPOSTA                 */
-/* ============================== */
+/* =========================================
+   ENVIAR RESPOSTA
+========================================= */
 
 async function enviarResposta() {
 
-    if (!atendimentoSelecionado) {
+    if (
+        !atendimentoSelecionado
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        atendimentoSelecionado.status ===
+        "encerrado"
+    ) {
 
         return;
 
@@ -952,9 +1838,7 @@ async function enviarResposta() {
 
 
     const {
-
         error
-
     } = await db
 
         .from("mensagens")
@@ -975,33 +1859,114 @@ async function enviarResposta() {
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Erro ao enviar resposta:",
+            error
+        );
 
         return;
 
     }
 
 
-    campo.value = "";
+    campo.value =
+        "";
+
+
+    /*
+       Caso o atendimento ainda esteja
+       aguardando, passa para em atendimento.
+    */
+
+    if (
+        atendimentoSelecionado.status ===
+        "aguardando"
+    ) {
+
+        const {
+            error:
+                erroStatus
+        } = await db
+
+            .from("atendimentos")
+
+            .update({
+
+                status:
+                    "em_atendimento"
+
+            })
+
+            .eq(
+                "id",
+                atendimentoSelecionado.id
+            );
+
+
+        if (erroStatus) {
+
+            console.error(
+                "Erro ao atualizar status:",
+                erroStatus
+            );
+
+        } else {
+
+            atendimentoSelecionado.status =
+                "em_atendimento";
+
+        }
+
+    }
+
+
+    carregarAtendimentos();
 
 }
 
 
 
-/* ============================== */
-/* ENCERRAR                       */
-/* ============================== */
+/* =========================================
+   ENCERRAR
+========================================= */
 
 async function encerrarAdmin() {
 
-    if (!atendimentoSelecionado) {
+    if (
+        !atendimentoSelecionado
+    ) {
 
         return;
 
     }
 
 
-    await db
+    if (
+        atendimentoSelecionado.status ===
+        "encerrado"
+    ) {
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+            "Deseja realmente encerrar este atendimento?"
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } = await db
 
         .from("atendimentos")
 
@@ -1021,23 +1986,61 @@ async function encerrarAdmin() {
         );
 
 
+    if (error) {
+
+        console.error(
+            "Erro ao encerrar atendimento:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    atendimentoSelecionado.status =
+        "encerrado";
+
+
+    document.getElementById(
+        "clienteStatus"
+    ).textContent =
+        "⚫ Encerrado";
+
+
+    document.getElementById(
+        "resposta"
+    ).disabled =
+        true;
+
+
+    document.getElementById(
+        "botaoEnviar"
+    ).disabled =
+        true;
+
+
+    document.getElementById(
+        "botaoEncerrar"
+    ).disabled =
+        true;
+
+
     carregarAtendimentos();
 
 }
 
 
 
-/* ============================== */
-/* REALTIME DO PAINEL              */
-/* ============================== */
+/* =========================================
+   REALTIME DO PAINEL
+========================================= */
 
 function iniciarRealtimeAdmin() {
 
     if (canalAdmin) {
 
-        db.removeChannel(
-            canalAdmin
-        );
+        return;
 
     }
 
@@ -1113,6 +2116,105 @@ function iniciarRealtimeAdmin() {
             .subscribe();
 
 }
+
+
+
+/* =========================================
+   FORMATAR DATA
+========================================= */
+
+function formatarData(
+    data
+) {
+
+    if (!data) {
+
+        return "--";
+
+    }
+
+
+    return new Date(
+        data
+    ).toLocaleString(
+        "pt-BR",
+        {
+
+            day:
+                "2-digit",
+
+            month:
+                "2-digit",
+
+            hour:
+                "2-digit",
+
+            minute:
+                "2-digit"
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   FORMATAR HORA
+========================================= */
+
+function formatarHora(
+    data
+) {
+
+    if (!data) {
+
+        return "";
+
+    }
+
+
+    return new Date(
+        data
+    ).toLocaleTimeString(
+        "pt-BR",
+        {
+
+            hour:
+                "2-digit",
+
+            minute:
+                "2-digit"
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   SEGURANÇA HTML
+========================================= */
+
+function escaparHTML(
+    texto
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        texto;
+
+
+    return div.innerHTML;
+
+}
+
 
 </script>
 
