@@ -294,7 +294,7 @@ function abrirWhatsApp() {
 
 
     const numero =
-        "5511999999999";
+        "551193349778";
 
 
     const mensagem =
