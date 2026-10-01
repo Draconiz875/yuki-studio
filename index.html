@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Meu Site</title>
+    <title>Yuki Studio</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
+    <!-- CABEÇALHO -->
     <header>
-        <div class="logo">MeuSite</div>
+        <div class="logo">YUKI STUDIO</div>
 
         <nav>
             <a href="#inicio">Início</a>
@@ -23,19 +25,26 @@
     </header>
 
 
+    <!-- INÍCIO -->
     <main>
 
         <section id="inicio" class="hero">
 
             <div class="hero-content">
 
-                <h1>Bem-vindo ao nosso site</h1>
+                <span class="tag">YUKI STUDIO</span>
+
+                <h1>
+                    Tecnologia que<br>
+                    <span>conecta você.</span>
+                </h1>
 
                 <p>
-                    Precisa de ajuda? Nossa equipe está pronta para atender você.
+                    Precisa de ajuda? Nossa equipe está pronta
+                    para atender você.
                 </p>
 
-                <button onclick="abrirChat()">
+                <button class="main-button" onclick="abrirChat()">
                     💬 Falar com suporte
                 </button>
 
@@ -44,37 +53,63 @@
         </section>
 
 
+        <!-- SOBRE -->
         <section id="sobre" class="section">
 
-            <h2>Sobre nós</h2>
+            <div class="section-content">
 
-            <p>
-                Aqui você pode colocar as informações da sua empresa,
-                projeto ou serviço.
-            </p>
+                <span class="tag">SOBRE NÓS</span>
+
+                <h2>Yuki Studio</h2>
+
+                <p>
+                    Somos um estúdio focado em tecnologia,
+                    atendimento e soluções digitais.
+                </p>
+
+            </div>
 
         </section>
 
 
+        <!-- SERVIÇOS -->
         <section id="servicos" class="section">
 
-            <h2>Nossos serviços</h2>
+            <div class="section-content">
 
-            <div class="cards">
+                <span class="tag">SERVIÇOS</span>
 
-                <div class="card">
-                    <h3>Serviço 1</h3>
-                    <p>Descrição do serviço.</p>
-                </div>
+                <h2>O que fazemos</h2>
 
-                <div class="card">
-                    <h3>Serviço 2</h3>
-                    <p>Descrição do serviço.</p>
-                </div>
+                <div class="cards">
 
-                <div class="card">
-                    <h3>Serviço 3</h3>
-                    <p>Descrição do serviço.</p>
+                    <div class="card">
+                        <div class="card-icon">💻</div>
+                        <h3>Desenvolvimento</h3>
+                        <p>
+                            Desenvolvimento de sites e
+                            soluções digitais.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🛠️</div>
+                        <h3>Suporte</h3>
+                        <p>
+                            Atendimento para ajudar você
+                            com suas dúvidas.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🚀</div>
+                        <h3>Projetos</h3>
+                        <p>
+                            Criação de projetos modernos
+                            e personalizados.
+                        </p>
+                    </div>
+
                 </div>
 
             </div>
@@ -82,38 +117,53 @@
         </section>
 
 
+        <!-- CONTATO -->
         <section id="contato" class="section">
 
-            <h2>Contato</h2>
+            <div class="section-content">
 
-            <p>
-                Entre em contato conosco através do suporte.
-            </p>
+                <span class="tag">CONTATO</span>
+
+                <h2>Fale conosco</h2>
+
+                <p>
+                    Entre em contato através do nosso
+                    sistema de suporte.
+                </p>
+
+                <button class="main-button" onclick="abrirChat()">
+                    💬 Abrir suporte
+                </button>
+
+            </div>
 
         </section>
 
     </main>
 
 
-    <!-- BOTÃO DO CHAT -->
-
+    <!-- BOTÃO FLUTUANTE -->
     <button id="chatButton" onclick="abrirChat()">
         💬
     </button>
 
 
     <!-- JANELA DO CHAT -->
-
     <div id="chatWindow">
 
         <div class="chat-header">
 
             <div>
-                <strong>Suporte</strong>
-                <span>🟢 Online</span>
+                <strong>Yuki Support</strong>
+
+                <span>
+                    🟢 Online
+                </span>
             </div>
 
-            <button onclick="fecharChat()">×</button>
+            <button onclick="fecharChat()">
+                ×
+            </button>
 
         </div>
 
@@ -121,7 +171,9 @@
         <div id="messages" class="messages">
 
             <div class="message support">
-                Olá! 👋<br>
+                Olá! 👋
+                <br><br>
+                Seja bem-vindo ao suporte da Yuki Studio.
                 Como podemos ajudar?
             </div>
 
@@ -146,7 +198,8 @@
     </div>
 
 
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 
 </body>
+
 </html>
