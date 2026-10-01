@@ -1,153 +1,227 @@
-/* ================================= */
-/* CONFIGURAÇÃO DO ATENDIMENTO       */
-/* ================================= */
-
-let atendenteAtual = 1;
+/* ========================================= */
+/* YUKI STUDIO - CHAT EM TEMPO REAL          */
+/* ========================================= */
 
 
-/*
-    FALSE = atendimento acontecendo
-    TRUE  = atendimento encerrado
-*/
+/* ========================================= */
+/* CONFIGURAÇÃO SUPABASE                     */
+/* ========================================= */
+
+const SUPABASE_URL =
+    "https://moaeniuahyipcklspjbs.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_DZ_bN0dLHYZ9LbBJR5vB7Q_viUUgnvQ";
+
+
+const db =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* ========================================= */
+/* VARIÁVEIS DO ATENDIMENTO                  */
+/* ========================================= */
+
+let clienteUID = null;
+
+let atendimentoAtual = null;
+
+let canalMensagens = null;
+
+let atendenteAtual =
+    Number(localStorage.getItem("yuki_atendente")) || 1;
 
 let atendimentoEncerrado = false;
 
 
+/* ========================================= */
+/* INICIALIZAÇÃO                             */
+/* ========================================= */
 
-/* ================================= */
-/* ABRIR CHAT                         */
-/* ================================= */
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciarChat
+);
+
+
+async function iniciarChat() {
+
+    try {
+
+        /*
+            Cria uma identidade temporária
+            para o visitante.
+        */
+
+        const {
+
+            data,
+            error
+
+        } = await db.auth.signInAnonymously();
+
+
+        if (error) {
+
+            console.error(
+                "Erro ao criar sessão:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        clienteUID =
+            data.user.id;
+
+
+        console.log(
+            "Cliente conectado:",
+            clienteUID
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro de conexão:",
+            erro
+        );
+
+    }
+
+}
+
+
+/* ========================================= */
+/* ABRIR CHAT                                */
+/* ========================================= */
 
 function abrirChat() {
 
     const chat =
-        document.getElementById("chatWindow");
+        document.getElementById(
+            "chatWindow"
+        );
+
 
     chat.style.display = "flex";
 
 
     const botao =
-        document.getElementById("chatButton");
+        document.getElementById(
+            "chatButton"
+        );
+
 
     botao.style.display = "none";
 
 
-    document
-        .getElementById("messageInput")
-        .focus();
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    input.focus();
+
+
+    /*
+        Se ainda não existe atendimento,
+        prepara uma nova conversa.
+    */
+
+    if (
+        !atendimentoAtual
+        &&
+        !atendimentoEncerrado
+    ) {
+
+        prepararNovoAtendimento();
+
+    }
 
 }
 
 
-
-/* ================================= */
-/* FECHAR CHAT                        */
-/* ================================= */
+/* ========================================= */
+/* FECHAR CHAT                               */
+/* ========================================= */
 
 function fecharChat() {
 
     const chat =
-        document.getElementById("chatWindow");
+        document.getElementById(
+            "chatWindow"
+        );
+
 
     chat.style.display = "none";
 
 
     const botao =
-        document.getElementById("chatButton");
+        document.getElementById(
+            "chatButton"
+        );
+
 
     botao.style.display = "block";
 
 }
 
 
+/* ========================================= */
+/* PREPARAR NOVO ATENDIMENTO                 */
+/* ========================================= */
 
-/* ================================= */
-/* ENVIAR MENSAGEM                   */
-/* ================================= */
+function prepararNovoAtendimento() {
 
-function enviarMensagem() {
+    atendimentoEncerrado =
+        false;
+
 
     const input =
-        document.getElementById("messageInput");
+        document.getElementById(
+            "messageInput"
+        );
 
 
-    const texto =
-        input.value.trim();
+    const botaoEnviar =
+        document.querySelector(
+            ".chat-input button"
+        );
 
 
-    if (texto === "") {
-
-        return;
-
-    }
+    input.disabled = false;
 
 
+    botaoEnviar.disabled = false;
+
+
+    /*
+        Remove mensagens antigas
+        visualmente.
+    */
 
     const messages =
-        document.getElementById("messages");
+        document.getElementById(
+            "messages"
+        );
 
 
+    messages.innerHTML = `
 
-    /* ============================== */
-    /* MENSAGEM DO USUÁRIO             */
-    /* ============================== */
-
-    const userMessage =
-        document.createElement("div");
-
-
-    userMessage.className =
-        "message user";
-
-
-    userMessage.textContent =
-        texto;
-
-
-    messages.appendChild(
-        userMessage
-    );
-
-
-    input.value = "";
-
-
-    messages.scrollTop =
-        messages.scrollHeight;
-
-
-
-    /* ============================== */
-    /* RESPOSTA DO ATENDENTE           */
-    /* ============================== */
-
-    setTimeout(function () {
-
-
-        const supportMessage =
-            document.createElement("div");
-
-
-        supportMessage.className =
-            "message support";
-
-
-
-        /* ATENDENTE ATUAL */
-
-        const foto =
-            atendenteAtual === 1
-                ? "atendente1.png"
-                : "atendente2.png";
-
-
-
-        supportMessage.innerHTML = `
+        <div class="message support">
 
             <div class="support-profile">
 
                 <img
-                    src="./${foto}"
+                    src="./atendente${atendenteAtual}.png"
                     alt="Atendente"
                 >
 
@@ -168,67 +242,424 @@ function enviarMensagem() {
 
             <div class="support-text">
 
-                Obrigado pela mensagem! 😊
+                Olá! 👋
 
                 <br><br>
 
-                Estou analisando sua solicitação
-                e vou ajudar você.
+                Seja bem-vindo ao suporte
+                da Yuki Studio.
+
+                <br><br>
+
+                Como podemos ajudar?
 
             </div>
 
-        `;
+        </div>
+
+    `;
 
 
+    /*
+        Remove botão de novo atendimento
+        caso exista.
+    */
 
-        messages.appendChild(
-            supportMessage
+    const novo =
+        document.getElementById(
+            "novoAtendimentoButton"
         );
 
 
-        messages.scrollTop =
-            messages.scrollHeight;
+    if (novo) {
 
+        novo.remove();
 
-
-    }, 1000);
+    }
 
 }
 
 
+/* ========================================= */
+/* CRIAR ATENDIMENTO                         */
+/* ========================================= */
 
-/* ================================= */
-/* ENCERRAR ATENDIMENTO              */
-/* ================================= */
+async function criarAtendimento() {
 
-function encerrarAtendimento() {
+    if (!clienteUID) {
 
+        alert(
+            "Aguarde alguns segundos enquanto conectamos ao suporte."
+        );
+
+        return null;
+
+    }
+
+
+    const {
+
+        data,
+        error
+
+    } = await db
+
+        .from("atendimentos")
+
+        .insert({
+
+            cliente_id:
+                clienteUID,
+
+            cliente_uid:
+                clienteUID,
+
+            cliente_nome:
+                "Cliente",
+
+            atendente:
+                "Atendente " +
+                atendenteAtual,
+
+            status:
+                "aguardando"
+
+        })
+
+        .select()
+
+        .single();
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao criar atendimento:",
+            error
+        );
+
+        alert(
+            "Não foi possível iniciar o atendimento."
+        );
+
+        return null;
+
+    }
+
+
+    atendimentoAtual =
+        data;
+
+
+    atendimentoEncerrado =
+        false;
+
+
+    iniciarRealtime();
+
+
+    return data;
+
+}
+
+
+/* ========================================= */
+/* CONECTAR MENSAGENS EM TEMPO REAL          */
+/* ========================================= */
+
+function iniciarRealtime() {
+
+    if (!atendimentoAtual) {
+
+        return;
+
+    }
+
+
+    /*
+        Remove conexão anterior.
+    */
+
+    if (canalMensagens) {
+
+        db.removeChannel(
+            canalMensagens
+        );
+
+    }
+
+
+    canalMensagens =
+        db
+
+            .channel(
+                "chat-" +
+                atendimentoAtual.id
+            )
+
+            .on(
+
+                "postgres_changes",
+
+                {
+
+                    event:
+                        "INSERT",
+
+                    schema:
+                        "public",
+
+                    table:
+                        "mensagens",
+
+                    filter:
+                        "atendimento_id=eq." +
+                        atendimentoAtual.id
+
+                },
+
+                function(payload) {
+
+                    receberMensagem(
+                        payload.new
+                    );
+
+                }
+
+            )
+
+            .subscribe();
+
+
+}
+
+
+/* ========================================= */
+/* ENVIAR MENSAGEM                           */
+/* ========================================= */
+
+async function enviarMensagem() {
+
+    if (atendimentoEncerrado) {
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const texto =
+        input.value.trim();
+
+
+    if (texto === "") {
+
+        return;
+
+    }
+
+
+    /*
+        Se ainda não existe atendimento,
+        cria um.
+    */
+
+    if (!atendimentoAtual) {
+
+        const atendimento =
+            await criarAtendimento();
+
+
+        if (!atendimento) {
+
+            return;
+
+        }
+
+    }
+
+
+    input.value = "";
+
+
+    /*
+        Salva a mensagem no banco.
+    */
+
+    const {
+
+        error
+
+    } = await db
+
+        .from("mensagens")
+
+        .insert({
+
+            atendimento_id:
+                atendimentoAtual.id,
+
+            remetente:
+                "cliente",
+
+            mensagem:
+                texto
+
+        });
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao enviar mensagem:",
+            error
+        );
+
+
+        /*
+            Devolve o texto ao campo
+            caso ocorra algum erro.
+        */
+
+        input.value =
+            texto;
+
+    }
+
+}
+
+
+/* ========================================= */
+/* RECEBER MENSAGEM                          */
+/* ========================================= */
+
+function receberMensagem(
+    mensagem
+) {
+
+    /*
+        Ignora mensagens enviadas
+        pelo próprio cliente.
+    */
+
+    if (
+        mensagem.remetente ===
+        "cliente"
+    ) {
+
+        return;
+
+    }
+
+
+    mostrarMensagemAtendente(
+        mensagem.mensagem
+    );
+
+}
+
+
+/* ========================================= */
+/* MOSTRAR MENSAGEM DO CLIENTE               */
+/* ========================================= */
+
+function mostrarMensagemCliente(
+    texto
+) {
 
     const messages =
-        document.getElementById("messages");
+        document.getElementById(
+            "messages"
+        );
 
 
+    const mensagem =
+        document.createElement(
+            "div"
+        );
 
-    /* MENSAGEM DE ENCERRAMENTO */
 
-    const encerramento =
-        document.createElement("div");
+    mensagem.className =
+        "message user";
 
 
-    encerramento.className =
+    mensagem.textContent =
+        texto;
+
+
+    messages.appendChild(
+        mensagem
+    );
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+/* ========================================= */
+/* MOSTRAR MENSAGEM DO ATENDENTE             */
+/* ========================================= */
+
+function mostrarMensagemAtendente(
+    texto
+) {
+
+    const messages =
+        document.getElementById(
+            "messages"
+        );
+
+
+    const mensagem =
+        document.createElement(
+            "div"
+        );
+
+
+    mensagem.className =
         "message support";
 
 
-    encerramento.innerHTML = `
+    const foto =
+        atendenteAtual === 1
+            ? "atendente1.png"
+            : "atendente2.png";
+
+
+    mensagem.innerHTML = `
+
+        <div class="support-profile">
+
+            <img
+                src="./${foto}"
+                alt="Atendente"
+            >
+
+            <div>
+
+                <strong>
+                    Yuki Support
+                </strong>
+
+                <span>
+                    🟢 Atendente online
+                </span>
+
+            </div>
+
+        </div>
+
 
         <div class="support-text">
 
-            ✅ Atendimento encerrado.
-
-            <br><br>
-
-            Obrigado por entrar em contato
-            com a Yuki Studio!
+            ${escaparHTML(texto)}
 
         </div>
 
@@ -236,65 +667,224 @@ function encerrarAtendimento() {
 
 
     messages.appendChild(
-        encerramento
+        mensagem
     );
 
 
     messages.scrollTop =
         messages.scrollHeight;
 
+}
 
 
-    /*
-        Só agora o próximo atendimento
-        poderá usar outro atendente.
-    */
+/* ========================================= */
+/* ENCERRAR ATENDIMENTO                      */
+/* ========================================= */
 
-    atendimentoEncerrado = true;
+async function encerrarAtendimento() {
 
+    if (
+        !atendimentoAtual ||
+        atendimentoEncerrado
+    ) {
 
-
-    /*
-        Troca o atendente para o
-        próximo atendimento.
-    */
-
-    if (atendenteAtual === 1) {
-
-        atendenteAtual = 2;
-
-    } else {
-
-        atendenteAtual = 1;
+        return;
 
     }
 
 
-}
-
-
-
-/* ================================= */
-/* WHATSAPP                          */
-/* ================================= */
-
-function abrirWhatsApp() {
+    atendimentoEncerrado =
+        true;
 
 
     /*
-        TROQUE PELO NÚMERO REAL.
-
-        Formato:
-
-        55 + DDD + número
-
-        Exemplo:
-        5511999999999
+        Atualiza o atendimento no banco.
     */
 
+    const {
+
+        error
+
+    } = await db
+
+        .from("atendimentos")
+
+        .update({
+
+            status:
+                "encerrado",
+
+            encerrado_em:
+                new Date().toISOString()
+
+        })
+
+        .eq(
+            "id",
+            atendimentoAtual.id
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao encerrar:",
+            error
+        );
+
+    }
+
+
+    /*
+        Mensagem visual.
+    */
+
+    mostrarMensagemAtendente(
+        "✅ Atendimento encerrado.<br><br>" +
+        "Obrigado por entrar em contato " +
+        "com a Yuki Studio!"
+    );
+
+
+    /*
+        Desabilita campo de mensagem.
+    */
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const botaoEnviar =
+        document.querySelector(
+            ".chat-input button"
+        );
+
+
+    input.disabled = true;
+
+
+    botaoEnviar.disabled = true;
+
+
+    /*
+        Troca o atendente SOMENTE agora.
+    */
+
+    atendenteAtual =
+        atendenteAtual === 1
+            ? 2
+            : 1;
+
+
+    localStorage.setItem(
+        "yuki_atendente",
+        atendenteAtual
+    );
+
+
+    /*
+        Mostra botão para iniciar
+        um novo atendimento.
+    */
+
+    criarBotaoNovoAtendimento();
+
+
+    /*
+        Encerra o canal realtime.
+    */
+
+    if (canalMensagens) {
+
+        await db.removeChannel(
+            canalMensagens
+        );
+
+        canalMensagens =
+            null;
+
+    }
+
+
+    atendimentoAtual =
+        null;
+
+}
+
+
+/* ========================================= */
+/* NOVO ATENDIMENTO                          */
+/* ========================================= */
+
+function criarBotaoNovoAtendimento() {
+
+    if (
+        document.getElementById(
+            "novoAtendimentoButton"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const actions =
+        document.querySelector(
+            ".chat-actions"
+        );
+
+
+    if (!actions) {
+
+        return;
+
+    }
+
+
+    const botao =
+        document.createElement(
+            "button"
+        );
+
+
+    botao.id =
+        "novoAtendimentoButton";
+
+
+    botao.className =
+        "encerrar-button";
+
+
+    botao.textContent =
+        "💬 Iniciar novo atendimento";
+
+
+    botao.onclick =
+        function() {
+
+            prepararNovoAtendimento();
+
+        };
+
+
+    actions.appendChild(
+        botao
+    );
+
+}
+
+
+/* ========================================= */
+/* WHATSAPP                                  */
+/* ========================================= */
+
+function abrirWhatsApp() {
 
     const numero =
-    "5511933497788";
+        "5511933497788";
 
 
     const mensagem =
@@ -302,10 +892,12 @@ function abrirWhatsApp() {
 
 
     const url =
-        "https://wa.me/"
-        + numero
-        + "?text="
-        + encodeURIComponent(mensagem);
+        "https://wa.me/" +
+        numero +
+        "?text=" +
+        encodeURIComponent(
+            mensagem
+        );
 
 
     window.open(
@@ -316,16 +908,125 @@ function abrirWhatsApp() {
 }
 
 
+/* ========================================= */
+/* ENTER                                     */
+/* ========================================= */
 
-/* ================================= */
-/* ENTER                             */
-/* ================================= */
+function verificarEnter(
+    event
+) {
 
-function verificarEnter(event) {
+    if (
+        event.key === "Enter"
+    ) {
 
-    if (event.key === "Enter") {
+        event.preventDefault();
 
         enviarMensagem();
+
+    }
+
+}
+
+
+/* ========================================= */
+/* ESCAPAR HTML                              */
+/* ========================================= */
+
+function escaparHTML(
+    texto
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        texto;
+
+
+    return div.innerHTML
+        .replace(
+            /\n/g,
+            "<br>"
+        );
+
+}
+
+
+/* ========================================= */
+/* CARREGAR HISTÓRICO                        */
+/* ========================================= */
+
+async function carregarHistorico() {
+
+    if (!atendimentoAtual) {
+
+        return;
+
+    }
+
+
+    const {
+
+        data,
+        error
+
+    } = await db
+
+        .from("mensagens")
+
+        .select("*")
+
+        .eq(
+            "atendimento_id",
+            atendimentoAtual.id
+        )
+
+        .order(
+            "criado_em",
+            {
+                ascending:
+                    true
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao carregar histórico:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    for (
+        const mensagem
+        of data
+    ) {
+
+        if (
+            mensagem.remetente ===
+            "cliente"
+        ) {
+
+            mostrarMensagemCliente(
+                mensagem.mensagem
+            );
+
+        } else {
+
+            mostrarMensagemAtendente(
+                mensagem.mensagem
+            );
+
+        }
 
     }
 
