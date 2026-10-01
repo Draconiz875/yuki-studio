@@ -17,9 +17,7 @@ let clienteUID = null;
 let atendimentoAtual = null;
 let canalMensagens = null;
 
-let atendenteAtual =
-    Number(localStorage.getItem("yuki_atendente")) || 1;
-
+let atendenteAtual = 1;
 let atendimentoEncerrado = false;
 
 
@@ -37,7 +35,6 @@ async function iniciarChat() {
 
     try {
 
-        // Verifica se já existe uma sessão
         const {
             data: sessaoAtual
         } = await db.auth.getSession();
@@ -50,7 +47,6 @@ async function iniciarChat() {
 
         } else {
 
-            // Cria sessão anônima
             const {
                 data,
                 error
@@ -81,7 +77,6 @@ async function iniciarChat() {
         );
 
 
-        // Verifica se existe atendimento aberto
         await recuperarAtendimento();
 
 
@@ -97,9 +92,8 @@ async function iniciarChat() {
 }
 
 
-
 /* =========================================
-   RECUPERAR ATENDIMENTO EXISTENTE
+   RECUPERAR ATENDIMENTO
 ========================================= */
 
 async function recuperarAtendimento() {
@@ -155,6 +149,12 @@ async function recuperarAtendimento() {
 
         atendimentoEncerrado = false;
 
+
+        definirAtendenteVisual(
+            atendimentoAtual.atendente
+        );
+
+
         iniciarRealtime();
 
         await carregarHistorico();
@@ -163,6 +163,29 @@ async function recuperarAtendimento() {
 
 }
 
+
+/* =========================================
+   DEFINIR ATENDENTE VISUAL
+========================================= */
+
+function definirAtendenteVisual(
+    nomeAtendente
+) {
+
+    if (
+        nomeAtendente ===
+        "Atendente 2"
+    ) {
+
+        atendenteAtual = 2;
+
+    } else {
+
+        atendenteAtual = 1;
+
+    }
+
+}
 
 
 /* =========================================
@@ -210,7 +233,6 @@ function abrirChat() {
 }
 
 
-
 /* =========================================
    FECHAR CHAT
 ========================================= */
@@ -227,7 +249,6 @@ function fecharChat() {
     ).style.display = "block";
 
 }
-
 
 
 /* =========================================
@@ -269,7 +290,7 @@ function prepararNovoAtendimento() {
             <div class="support-profile">
 
                 <img
-                    src="./atendente${atendenteAtual}.png"
+                    src="./atendente1.png"
                     alt="Atendente"
                 >
 
@@ -323,7 +344,6 @@ function prepararNovoAtendimento() {
 }
 
 
-
 /* =========================================
    CRIAR ATENDIMENTO
 ========================================= */
@@ -340,6 +360,13 @@ async function criarAtendimento() {
 
     }
 
+
+    /*
+       O atendente NÃO é escolhido pelo navegador.
+
+       O banco de dados possui um trigger que
+       define automaticamente Atendente 1 ou 2.
+    */
 
     const {
         data,
@@ -358,10 +385,6 @@ async function criarAtendimento() {
 
             cliente_nome:
                 "Cliente",
-
-            atendente:
-                "Atendente " +
-                atendenteAtual,
 
             status:
                 "aguardando"
@@ -389,9 +412,22 @@ async function criarAtendimento() {
     }
 
 
-    atendimentoAtual = data;
+    atendimentoAtual =
+        data;
 
-    atendimentoEncerrado = false;
+
+    atendimentoEncerrado =
+        false;
+
+
+    /*
+       O banco decidiu qual atendente foi
+       responsável pela conversa.
+    */
+
+    definirAtendenteVisual(
+        data.atendente
+    );
 
 
     iniciarRealtime();
@@ -402,9 +438,8 @@ async function criarAtendimento() {
 }
 
 
-
 /* =========================================
-   REALTIME DAS MENSAGENS
+   REALTIME
 ========================================= */
 
 function iniciarRealtime() {
@@ -466,9 +501,8 @@ function iniciarRealtime() {
 }
 
 
-
 /* =========================================
-   ENVIAR MENSAGEM DO CLIENTE
+   ENVIAR MENSAGEM
 ========================================= */
 
 async function enviarMensagem() {
@@ -497,7 +531,6 @@ async function enviarMensagem() {
     }
 
 
-    // Cria atendimento caso ainda não exista
     if (!atendimentoAtual) {
 
         const atendimento =
@@ -513,19 +546,18 @@ async function enviarMensagem() {
     }
 
 
-    // Limpa o campo
     input.value = "";
 
 
-    // MOSTRA A MENSAGEM IMEDIATAMENTE
-    // NO CHAT DO CLIENTE
+    /*
+       Mostra imediatamente a mensagem
+       no lado do cliente.
+    */
 
     mostrarMensagemCliente(
         texto
     );
 
-
-    // Salva no Supabase
 
     const {
         error
@@ -555,17 +587,14 @@ async function enviarMensagem() {
         );
 
 
-        // Se deu erro, coloca novamente
-        // o texto no campo
-
-        input.value = texto;
+        input.value =
+            texto;
 
         return;
 
     }
 
 }
-
 
 
 /* =========================================
@@ -576,8 +605,10 @@ function receberMensagem(
     mensagem
 ) {
 
-    // Ignora mensagens enviadas
-    // pelo próprio cliente
+    /*
+       Não mostra novamente a mensagem
+       que foi enviada pelo próprio cliente.
+    */
 
     if (
         mensagem.remetente ===
@@ -596,9 +627,8 @@ function receberMensagem(
 }
 
 
-
 /* =========================================
-   MOSTRAR MENSAGEM DO CLIENTE
+   MENSAGEM DO CLIENTE
 ========================================= */
 
 function mostrarMensagemCliente(
@@ -636,9 +666,8 @@ function mostrarMensagemCliente(
 }
 
 
-
 /* =========================================
-   MOSTRAR MENSAGEM DO ATENDENTE
+   MENSAGEM DO ATENDENTE
 ========================================= */
 
 function mostrarMensagemAtendente(
@@ -662,9 +691,9 @@ function mostrarMensagemAtendente(
 
 
     const foto =
-        atendenteAtual === 1
-            ? "atendente1.png"
-            : "atendente2.png";
+        atendenteAtual === 2
+            ? "atendente2.png"
+            : "atendente1.png";
 
 
     mensagem.innerHTML = `
@@ -709,7 +738,6 @@ function mostrarMensagemAtendente(
         messages.scrollHeight;
 
 }
-
 
 
 /* =========================================
@@ -785,24 +813,6 @@ async function encerrarAtendimento() {
     botaoEnviar.disabled = true;
 
 
-    // Alterna o atendente SOMENTE
-    // depois que o atendimento terminou
-
-    atendenteAtual =
-        atendenteAtual === 1
-            ? 2
-            : 1;
-
-
-    localStorage.setItem(
-        "yuki_atendente",
-        atendenteAtual
-    );
-
-
-    criarBotaoNovoAtendimento();
-
-
     if (canalMensagens) {
 
         await db.removeChannel(
@@ -814,14 +824,17 @@ async function encerrarAtendimento() {
     }
 
 
-    atendimentoAtual = null;
+    atendimentoAtual =
+        null;
+
+
+    criarBotaoNovoAtendimento();
 
 }
 
 
-
 /* =========================================
-   BOTÃO NOVO ATENDIMENTO
+   NOVO ATENDIMENTO
 ========================================= */
 
 function criarBotaoNovoAtendimento() {
@@ -883,7 +896,6 @@ function criarBotaoNovoAtendimento() {
 }
 
 
-
 /* =========================================
    WHATSAPP
 ========================================= */
@@ -915,9 +927,8 @@ function abrirWhatsApp() {
 }
 
 
-
 /* =========================================
-   ENTER PARA ENVIAR
+   ENTER
 ========================================= */
 
 function verificarEnter(
@@ -938,9 +949,8 @@ function verificarEnter(
 }
 
 
-
 /* =========================================
-   PROTEÇÃO CONTRA HTML
+   SEGURANÇA HTML
 ========================================= */
 
 function escaparHTML(
@@ -966,9 +976,8 @@ function escaparHTML(
 }
 
 
-
 /* =========================================
-   CARREGAR HISTÓRICO
+   HISTÓRICO
 ========================================= */
 
 async function carregarHistorico() {
