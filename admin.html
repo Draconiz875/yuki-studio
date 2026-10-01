@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Yuki Studio | Painel</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            background: #020403;
+
+            color: white;
+
+        }
+
+
+        /* LOGIN */
+
+        #login {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+        }
+
+
+        .login-box {
+
+            width: 100%;
+
+            max-width: 400px;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            background: #07120c;
+
+            border: 1px solid rgba(80,255,140,.2);
+
+            box-shadow: 0 20px 60px rgba(0,0,0,.5);
+
+        }
+
+
+        .login-box h1 {
+
+            color: #5cff98;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .login-box p {
+
+            color: #999;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            padding: 13px;
+
+            margin-bottom: 12px;
+
+            border-radius: 10px;
+
+            border: 1px solid rgba(255,255,255,.12);
+
+            background: #020604;
+
+            color: white;
+
+            outline: none;
+
+        }
+
+
+        textarea {
+
+            resize: none;
+
+            height: 80px;
+
+        }
+
+
+        button {
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 12px 18px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+        }
+
+
+        .login-button {
+
+            width: 100%;
+
+            background: #36e875;
+
+            color: #001b09;
+
+        }
+
+
+        #loginError {
+
+            color: #ff7777;
+
+            margin-top: 12px;
+
+            font-size: 13px;
+
+        }
+
+
+        /* PAINEL */
+
+        #painel {
+
+            display: none;
+
+            min-height: 100vh;
+
+        }
+
+
+        .topbar {
+
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 25px;
+
+            background: #07120c;
+
+            border-bottom: 1px solid rgba(80,255,140,.15);
+
+        }
+
+
+        .logo {
+
+            color: #5cff98;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            letter-spacing: 3px;
+
+        }
+
+
+        .logout {
+
+            background: rgba(255,255,255,.08);
+
+            color: #aaa;
+
+        }
+
+
+        .layout {
+
+            display: grid;
+
+            grid-template-columns: 320px 1fr;
+
+            height: calc(100vh - 70px);
+
+        }
+
+
+        /* LISTA */
+
+        .atendimentos {
+
+            border-right: 1px solid rgba(255,255,255,.08);
+
+            overflow-y: auto;
+
+            background: #030805;
+
+        }
+
+
+        .lista-titulo {
+
+            padding: 20px;
+
+            color: #aaa;
+
+            font-size: 13px;
+
+        }
+
+
+        .atendimento {
+
+            padding: 18px;
+
+            border-top: 1px solid rgba(255,255,255,.05);
+
+            cursor: pointer;
+
+        }
+
+
+        .atendimento:hover {
+
+            background: rgba(80,255,140,.06);
+
+        }
+
+
+        .atendimento strong {
+
+            display: block;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .status {
+
+            color: #5cff98;
+
+            font-size: 12px;
+
+        }
+
+
+        /* CHAT */
+
+        .chat {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .chat-top {
+
+            padding: 20px;
+
+            border-bottom: 1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .chat-top span {
+
+            color: #5cff98;
+
+            font-size: 12px;
+
+        }
+
+
+        #adminMessages {
+
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding: 25px;
+
+        }
+
+
+        .msg {
+
+            max-width: 70%;
+
+            padding: 12px 15px;
+
+            margin-bottom: 12px;
+
+            border-radius: 15px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .msg.cliente {
+
+            background: #18231d;
+
+            margin-right: auto;
+
+        }
+
+
+        .msg.atendente {
+
+            background: #216b3d;
+
+            margin-left: auto;
+
+        }
+
+
+        .resposta {
+
+            display: flex;
+
+            gap: 10px;
+
+            padding: 15px;
+
+            border-top: 1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .resposta textarea {
+
+            margin: 0;
+
+            height: 55px;
+
+        }
+
+
+        .enviar {
+
+            background: #36e875;
+
+            color: #001b09;
+
+            min-width: 90px;
+
+        }
+
+
+        .encerrar {
+
+            background: rgba(255,80,80,.12);
+
+            color: #ff8a8a;
+
+            margin: 0 15px 15px;
+
+        }
+
+
+        .vazio {
+
+            color: #666;
+
+            padding: 25px;
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .layout {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .atendimentos {
+
+                display: none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- LOGIN -->
+
+    <section id="login">
+
+        <div class="login-box">
+
+            <h1>YUKI STUDIO</h1>
+
+            <p>
+                Painel de atendimento
+            </p>
+
+
+            <input
+                type="email"
+                id="email"
+                placeholder="E-mail"
+            >
+
+
+            <input
+                type="password"
+                id="senha"
+                placeholder="Senha"
+            >
+
+
+            <button
+                class="login-button"
+                onclick="login()"
+            >
+                Entrar
+            </button>
+
+
+            <div id="loginError"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PAINEL -->
+
+    <section id="painel">
+
+        <header class="topbar">
+
+            <div class="logo">
+                YUKI SUPPORT
+            </div>
+
+
+            <button
+                class="logout"
+                onclick="logout()"
+            >
+                Sair
+            </button>
+
+        </header>
+
+
+        <main class="layout">
+
+
+            <!-- ATENDIMENTOS -->
+
+            <aside class="atendimentos">
+
+                <div class="lista-titulo">
+
+                    ATENDIMENTOS
+
+                </div>
+
+
+                <div id="listaAtendimentos">
+
+                    <div class="vazio">
+
+                        Nenhum atendimento ainda.
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+
+            <!-- CHAT -->
+
+            <section class="chat">
+
+
+                <div class="chat-top">
+
+                    <strong id="clienteNome">
+                        Selecione um atendimento
+                    </strong>
+
+                    <br>
+
+                    <span id="clienteStatus">
+                        Aguardando seleção
+                    </span>
+
+                </div>
+
+
+                <div id="adminMessages">
+
+                    <div class="vazio">
+
+                        Selecione um cliente
+                        para visualizar a conversa.
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="encerrar"
+                    onclick="encerrarAdmin()"
+                >
+                    ✓ Encerrar atendimento
+                </button>
+
+
+                <div class="resposta">
+
+                    <textarea
+                        id="resposta"
+                        placeholder="Digite sua resposta..."
+                    ></textarea>
+
+
+                    <button
+                        class="enviar"
+                        onclick="enviarResposta()"
+                    >
+                        Enviar
+                    </button>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </section>
+
+
+
+<script>
+
+const SUPABASE_URL =
+    "https://moaeniuahyipcklspjbs.supabase.co";
+
+
+const SUPABASE_KEY =
+    "sb_publishable_DZ_bN0dLHYZ9LbBJR5vB7Q_viUUgnvQ";
+
+
+const db =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+let atendimentoSelecionado = null;
+
+let canalAdmin = null;
+
+
+
+/* ============================== */
+/* LOGIN                          */
+/* ============================== */
+
+async function login() {
+
+    const email =
+        document.getElementById("email").value.trim();
+
+
+    const senha =
+        document.getElementById("senha").value;
+
+
+    const erro =
+        document.getElementById("loginError");
+
+
+    erro.textContent = "";
+
+
+    const { data, error } =
+        await db.auth.signInWithPassword({
+
+            email: email,
+
+            password: senha
+
+        });
+
+
+    if (error) {
+
+        erro.textContent =
+            "E-mail ou senha incorretos.";
+
+        return;
+
+    }
+
+
+    document.getElementById("login").style.display =
+        "none";
+
+
+    document.getElementById("painel").style.display =
+        "block";
+
+
+    carregarAtendimentos();
+
+}
+
+
+
+/* ============================== */
+/* LOGOUT                         */
+/* ============================== */
+
+async function logout() {
+
+    await db.auth.signOut();
+
+    location.reload();
+
+}
+
+
+
+/* ============================== */
+/* CARREGAR ATENDIMENTOS          */
+/* ============================== */
+
+async function carregarAtendimentos() {
+
+    const {
+
+        data,
+        error
+
+    } = await db
+
+        .from("atendimentos")
+
+        .select("*")
+
+        .order(
+            "criado_em",
+            {
+                ascending: false
+            }
+        );
+
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    const lista =
+        document.getElementById(
+            "listaAtendimentos"
+        );
+
+
+    lista.innerHTML = "";
+
+
+    if (!data.length) {
+
+        lista.innerHTML =
+            '<div class="vazio">Nenhum atendimento ainda.</div>';
+
+        return;
+
+    }
+
+
+    data.forEach(
+        atendimento => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "atendimento";
+
+
+            item.innerHTML = `
+
+                <strong>
+                    ${atendimento.cliente_nome}
+                </strong>
+
+                <span class="status">
+                    ● ${atendimento.status}
+                </span>
+
+            `;
+
+
+            item.onclick =
+                () => abrirAtendimento(
+                    atendimento
+                );
+
+
+            lista.appendChild(item);
+
+        }
+    );
+
+
+    iniciarRealtimeAdmin();
+
+}
+
+
+
+/* ============================== */
+/* ABRIR ATENDIMENTO               */
+/* ============================== */
+
+async function abrirAtendimento(
+    atendimento
+) {
+
+    atendimentoSelecionado =
+        atendimento;
+
+
+    document.getElementById(
+        "clienteNome"
+    ).textContent =
+        atendimento.cliente_nome;
+
+
+    document.getElementById(
+        "clienteStatus"
+    ).textContent =
+        atendimento.status;
+
+
+    carregarMensagens(
+        atendimento.id
+    );
+
+}
+
+
+
+/* ============================== */
+/* CARREGAR MENSAGENS              */
+/* ============================== */
+
+async function carregarMensagens(
+    atendimentoId
+) {
+
+    const {
+
+        data,
+        error
+
+    } = await db
+
+        .from("mensagens")
+
+        .select("*")
+
+        .eq(
+            "atendimento_id",
+            atendimentoId
+        )
+
+        .order(
+            "criado_em",
+            {
+                ascending: true
+            }
+        );
+
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    const area =
+        document.getElementById(
+            "adminMessages"
+        );
+
+
+    area.innerHTML = "";
+
+
+    data.forEach(
+        mensagem => {
+
+            mostrarMensagemAdmin(
+                mensagem
+            );
+
+        }
+    );
+
+
+    area.scrollTop =
+        area.scrollHeight;
+
+}
+
+
+
+/* ============================== */
+/* MOSTRAR MENSAGEM                */
+/* ============================== */
+
+function mostrarMensagemAdmin(
+    mensagem
+) {
+
+    const area =
+        document.getElementById(
+            "adminMessages"
+        );
+
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.className =
+        "msg " +
+        (
+            mensagem.remetente ===
+            "cliente"
+                ? "cliente"
+                : "atendente"
+        );
+
+
+    div.textContent =
+        mensagem.mensagem;
+
+
+    area.appendChild(div);
+
+
+    area.scrollTop =
+        area.scrollHeight;
+
+}
+
+
+
+/* ============================== */
+/* ENVIAR RESPOSTA                 */
+/* ============================== */
+
+async function enviarResposta() {
+
+    if (!atendimentoSelecionado) {
+
+        return;
+
+    }
+
+
+    const campo =
+        document.getElementById(
+            "resposta"
+        );
+
+
+    const texto =
+        campo.value.trim();
+
+
+    if (!texto) {
+
+        return;
+
+    }
+
+
+    const {
+
+        error
+
+    } = await db
+
+        .from("mensagens")
+
+        .insert({
+
+            atendimento_id:
+                atendimentoSelecionado.id,
+
+            remetente:
+                "atendente",
+
+            mensagem:
+                texto
+
+        });
+
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    campo.value = "";
+
+}
+
+
+
+/* ============================== */
+/* ENCERRAR                       */
+/* ============================== */
+
+async function encerrarAdmin() {
+
+    if (!atendimentoSelecionado) {
+
+        return;
+
+    }
+
+
+    await db
+
+        .from("atendimentos")
+
+        .update({
+
+            status:
+                "encerrado",
+
+            encerrado_em:
+                new Date().toISOString()
+
+        })
+
+        .eq(
+            "id",
+            atendimentoSelecionado.id
+        );
+
+
+    carregarAtendimentos();
+
+}
+
+
+
+/* ============================== */
+/* REALTIME DO PAINEL              */
+/* ============================== */
+
+function iniciarRealtimeAdmin() {
+
+    if (canalAdmin) {
+
+        db.removeChannel(
+            canalAdmin
+        );
+
+    }
+
+
+    canalAdmin =
+
+        db
+
+            .channel(
+                "admin-atendimentos"
+            )
+
+            .on(
+
+                "postgres_changes",
+
+                {
+
+                    event:
+                        "*",
+
+                    schema:
+                        "public",
+
+                    table:
+                        "atendimentos"
+
+                },
+
+                function() {
+
+                    carregarAtendimentos();
+
+                }
+
+            )
+
+            .on(
+
+                "postgres_changes",
+
+                {
+
+                    event:
+                        "INSERT",
+
+                    schema:
+                        "public",
+
+                    table:
+                        "mensagens"
+
+                },
+
+                function(payload) {
+
+                    if (
+                        atendimentoSelecionado &&
+                        payload.new.atendimento_id ===
+                        atendimentoSelecionado.id
+                    ) {
+
+                        mostrarMensagemAdmin(
+                            payload.new
+                        );
+
+                    }
+
+                }
+
+            )
+
+            .subscribe();
+
+}
+
+</script>
+
+
+</body>
+
+</html>
