@@ -14,6 +14,8 @@ const db = window.supabase.createClient(
 ========================================= */
 
 let clienteUID = null;
+let clienteUsuario = null;
+
 let atendimentoAtual = null;
 let canalMensagens = null;
 
@@ -27,67 +29,1013 @@ let atendimentoEncerrado = false;
 
 document.addEventListener(
     "DOMContentLoaded",
-    iniciarChat
+    iniciarSistema
 );
 
 
-async function iniciarChat() {
+async function iniciarSistema() {
 
     try {
 
         const {
-            data: sessaoAtual
+            data,
+            error
         } = await db.auth.getSession();
 
 
-        if (sessaoAtual.session) {
+        if (error) {
 
-            clienteUID =
-                sessaoAtual.session.user.id;
-
-        } else {
-
-            const {
-                data,
+            console.error(
+                "Erro ao verificar sessão:",
                 error
-            } = await db.auth.signInAnonymously();
+            );
 
-
-            if (error) {
-
-                console.error(
-                    "Erro ao criar sessão:",
-                    error
-                );
-
-                return;
-
-            }
-
-
-            clienteUID =
-                data.user.id;
+            return;
 
         }
 
 
-        console.log(
-            "Cliente conectado:",
-            clienteUID
-        );
+        if (data.session) {
+
+            clienteUID =
+                data.session.user.id;
 
 
-        await recuperarAtendimento();
+            await carregarPerfilCliente();
+
+            await recuperarAtendimento();
+
+        }
+
+
+        atualizarInterfaceConta();
 
 
     } catch (erro) {
 
         console.error(
-            "Erro de conexão:",
+            "Erro de inicialização:",
             erro
         );
 
     }
+
+}
+
+
+/* =========================================
+   PERFIL DO CLIENTE
+========================================= */
+
+async function carregarPerfilCliente() {
+
+    if (!clienteUID) {
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } = await db
+
+        .from("clientes")
+
+        .select("*")
+
+        .eq(
+            "auth_user_id",
+            clienteUID
+        )
+
+        .maybeSingle();
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao carregar perfil:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if (data) {
+
+        clienteUsuario =
+            data.usuario;
+
+    }
+
+}
+
+
+/* =========================================
+   INTERFACE DA CONTA
+========================================= */
+
+function atualizarInterfaceConta() {
+
+    const loginButton =
+        document.getElementById(
+            "loginButton"
+        );
+
+
+    const logoutButton =
+        document.getElementById(
+            "logoutButton"
+        );
+
+
+    if (!loginButton || !logoutButton) {
+
+        return;
+
+    }
+
+
+    if (clienteUID) {
+
+        loginButton.textContent =
+            "👤 " +
+            (clienteUsuario || "Minha conta");
+
+
+        loginButton.onclick =
+            function () {
+
+                mostrarInformacoesConta();
+
+            };
+
+
+        logoutButton.style.display =
+            "block";
+
+
+    } else {
+
+        loginButton.textContent =
+            "👤 Entrar";
+
+
+        loginButton.onclick =
+            function () {
+
+                abrirLogin();
+
+            };
+
+
+        logoutButton.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================
+   ABRIR LOGIN
+========================================= */
+
+function abrirLogin() {
+
+    const modal =
+        document.getElementById(
+            "authModal"
+        );
+
+
+    if (!modal) {
+
+        return;
+
+    }
+
+
+    modal.style.display =
+        "flex";
+
+
+    mostrarLogin();
+
+
+    const campo =
+        document.getElementById(
+            "loginUsuario"
+        );
+
+
+    if (campo) {
+
+        campo.focus();
+
+    }
+
+}
+
+
+/* =========================================
+   FECHAR LOGIN
+========================================= */
+
+function fecharLogin() {
+
+    const modal =
+        document.getElementById(
+            "authModal"
+        );
+
+
+    if (modal) {
+
+        modal.style.display =
+            "none";
+
+    }
+
+
+    limparMensagemAuth();
+
+}
+
+
+/* =========================================
+   MOSTRAR LOGIN
+========================================= */
+
+function mostrarLogin() {
+
+    const login =
+        document.getElementById(
+            "loginForm"
+        );
+
+
+    const cadastro =
+        document.getElementById(
+            "cadastroForm"
+        );
+
+
+    if (login) {
+
+        login.style.display =
+            "block";
+
+    }
+
+
+    if (cadastro) {
+
+        cadastro.style.display =
+            "none";
+
+    }
+
+
+    limparMensagemAuth();
+
+}
+
+
+/* =========================================
+   MOSTRAR CADASTRO
+========================================= */
+
+function mostrarCadastro() {
+
+    const login =
+        document.getElementById(
+            "loginForm"
+        );
+
+
+    const cadastro =
+        document.getElementById(
+            "cadastroForm"
+        );
+
+
+    if (login) {
+
+        login.style.display =
+            "none";
+
+    }
+
+
+    if (cadastro) {
+
+        cadastro.style.display =
+            "block";
+
+    }
+
+
+    limparMensagemAuth();
+
+
+    const campo =
+        document.getElementById(
+            "cadastroUsuario"
+        );
+
+
+    if (campo) {
+
+        campo.focus();
+
+    }
+
+}
+
+
+/* =========================================
+   MENSAGEM DO LOGIN
+========================================= */
+
+function mostrarMensagemAuth(
+    mensagem,
+    sucesso = false
+) {
+
+    const elemento =
+        document.getElementById(
+            "authMensagem"
+        );
+
+
+    if (!elemento) {
+
+        return;
+
+    }
+
+
+    elemento.textContent =
+        mensagem;
+
+
+    elemento.style.display =
+        "block";
+
+
+    if (sucesso) {
+
+        elemento.style.color =
+            "#69ff9b";
+
+    } else {
+
+        elemento.style.color =
+            "#ff7070";
+
+    }
+
+}
+
+
+/* =========================================
+   LIMPAR MENSAGEM
+========================================= */
+
+function limparMensagemAuth() {
+
+    const elemento =
+        document.getElementById(
+            "authMensagem"
+        );
+
+
+    if (!elemento) {
+
+        return;
+
+    }
+
+
+    elemento.textContent = "";
+
+    elemento.style.display =
+        "none";
+
+}
+
+
+/* =========================================
+   VALIDAR USUÁRIO
+========================================= */
+
+function validarUsuario(
+    usuario
+) {
+
+    if (!usuario) {
+
+        return false;
+
+    }
+
+
+    /*
+       Permitimos apenas:
+
+       letras
+       números
+       _
+       -
+       .
+    */
+
+    return /^[a-zA-Z0-9_.-]{3,20}$/
+        .test(usuario);
+
+}
+
+
+/* =========================================
+   EMAIL INTERNO
+========================================= */
+
+function gerarEmailInterno(
+    usuario
+) {
+
+    return (
+        usuario.toLowerCase() +
+        "@yukistudio.local"
+    );
+
+}
+
+
+/* =========================================
+   CRIAR CONTA
+========================================= */
+
+async function criarConta() {
+
+    limparMensagemAuth();
+
+
+    const usuarioInput =
+        document.getElementById(
+            "cadastroUsuario"
+        );
+
+
+    const senhaInput =
+        document.getElementById(
+            "cadastroSenha"
+        );
+
+
+    const confirmarInput =
+        document.getElementById(
+            "cadastroConfirmarSenha"
+        );
+
+
+    const usuario =
+        usuarioInput.value.trim();
+
+
+    const senha =
+        senhaInput.value;
+
+
+    const confirmarSenha =
+        confirmarInput.value;
+
+
+    if (!validarUsuario(usuario)) {
+
+        mostrarMensagemAuth(
+            "O usuário deve ter de 3 a 20 caracteres e usar apenas letras, números, ponto, hífen ou _."
+        );
+
+        return;
+
+    }
+
+
+    if (senha.length < 6) {
+
+        mostrarMensagemAuth(
+            "A senha precisa ter pelo menos 6 caracteres."
+        );
+
+        return;
+
+    }
+
+
+    if (senha !== confirmarSenha) {
+
+        mostrarMensagemAuth(
+            "As senhas não são iguais."
+        );
+
+        return;
+
+    }
+
+
+    const emailInterno =
+        gerarEmailInterno(
+            usuario
+        );
+
+
+    mostrarMensagemAuth(
+        "Criando sua conta...",
+        true
+    );
+
+
+    try {
+
+        /*
+           O cliente não vê esse e-mail.
+
+           Ele é usado internamente pelo
+           sistema de autenticação do Supabase.
+        */
+
+        const {
+            data,
+            error
+        } = await db.auth.signUp({
+
+            email:
+                emailInterno,
+
+            password:
+                senha
+
+        });
+
+
+        if (error) {
+
+            console.error(
+                "Erro no cadastro:",
+                error
+            );
+
+
+            if (
+                error.message
+                    .toLowerCase()
+                    .includes("already registered")
+            ) {
+
+                mostrarMensagemAuth(
+                    "Esse usuário já está cadastrado."
+                );
+
+            } else {
+
+                mostrarMensagemAuth(
+                    "Não foi possível criar a conta: " +
+                    error.message
+                );
+
+            }
+
+            return;
+
+        }
+
+
+        if (
+            !data.user
+        ) {
+
+            mostrarMensagemAuth(
+                "Não foi possível criar o usuário."
+            );
+
+            return;
+
+        }
+
+
+        /*
+           O Confirm email foi desativado,
+           então esperamos receber uma sessão.
+        */
+
+        if (!data.session) {
+
+            mostrarMensagemAuth(
+                "A conta foi criada, mas não foi possível iniciar a sessão automaticamente."
+            );
+
+            return;
+
+        }
+
+
+        clienteUID =
+            data.user.id;
+
+
+        clienteUsuario =
+            usuario;
+
+
+        /*
+           Salva o perfil na tabela clientes.
+        */
+
+        const {
+            error:
+                perfilError
+        } = await db
+
+            .from("clientes")
+
+            .insert({
+
+                auth_user_id:
+                    clienteUID,
+
+                usuario:
+                    usuario.toLowerCase()
+
+            });
+
+
+        if (perfilError) {
+
+            console.error(
+                "Erro ao criar perfil:",
+                perfilError
+            );
+
+
+            await db.auth.signOut();
+
+
+            clienteUID =
+                null;
+
+            clienteUsuario =
+                null;
+
+
+            if (
+                perfilError.code ===
+                "23505"
+            ) {
+
+                mostrarMensagemAuth(
+                    "Esse usuário já está cadastrado."
+                );
+
+            } else {
+
+                mostrarMensagemAuth(
+                    "A conta foi criada, mas ocorreu um erro ao salvar o perfil."
+                );
+
+            }
+
+            return;
+
+        }
+
+
+        atualizarInterfaceConta();
+
+
+        mostrarMensagemAuth(
+            "Conta criada com sucesso! 🎉",
+            true
+        );
+
+
+        setTimeout(
+            function () {
+
+                fecharLogin();
+
+                abrirChat();
+
+            },
+            800
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro inesperado:",
+            erro
+        );
+
+
+        mostrarMensagemAuth(
+            "Ocorreu um erro ao criar a conta."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+async function fazerLogin() {
+
+    limparMensagemAuth();
+
+
+    const usuarioInput =
+        document.getElementById(
+            "loginUsuario"
+        );
+
+
+    const senhaInput =
+        document.getElementById(
+            "loginSenha"
+        );
+
+
+    const usuario =
+        usuarioInput.value.trim();
+
+
+    const senha =
+        senhaInput.value;
+
+
+    if (!validarUsuario(usuario)) {
+
+        mostrarMensagemAuth(
+            "Digite um usuário válido."
+        );
+
+        return;
+
+    }
+
+
+    if (!senha) {
+
+        mostrarMensagemAuth(
+            "Digite sua senha."
+        );
+
+        return;
+
+    }
+
+
+    const emailInterno =
+        gerarEmailInterno(
+            usuario
+        );
+
+
+    mostrarMensagemAuth(
+        "Entrando...",
+        true
+    );
+
+
+    try {
+
+        const {
+            data,
+            error
+        } = await db.auth.signInWithPassword({
+
+            email:
+                emailInterno,
+
+            password:
+                senha
+
+        });
+
+
+        if (error) {
+
+            console.error(
+                "Erro no login:",
+                error
+            );
+
+
+            mostrarMensagemAuth(
+                "Usuário ou senha incorretos."
+            );
+
+            return;
+
+        }
+
+
+        clienteUID =
+            data.user.id;
+
+
+        await carregarPerfilCliente();
+
+
+        if (!clienteUsuario) {
+
+            clienteUsuario =
+                usuario.toLowerCase();
+
+        }
+
+
+        atualizarInterfaceConta();
+
+
+        await recuperarAtendimento();
+
+
+        mostrarMensagemAuth(
+            "Login realizado com sucesso! ✅",
+            true
+        );
+
+
+        setTimeout(
+            function () {
+
+                fecharLogin();
+
+                abrirChat();
+
+            },
+            700
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro inesperado:",
+            erro
+        );
+
+
+        mostrarMensagemAuth(
+            "Ocorreu um erro ao entrar."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   SAIR DA CONTA
+========================================= */
+
+async function sairConta() {
+
+    try {
+
+        if (canalMensagens) {
+
+            await db.removeChannel(
+                canalMensagens
+            );
+
+            canalMensagens =
+                null;
+
+        }
+
+
+        const {
+            error
+        } = await db.auth.signOut();
+
+
+        if (error) {
+
+            console.error(
+                "Erro ao sair:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        clienteUID =
+            null;
+
+        clienteUsuario =
+            null;
+
+        atendimentoAtual =
+            null;
+
+        atendimentoEncerrado =
+            false;
+
+
+        atualizarInterfaceConta();
+
+
+        fecharChat();
+
+
+        const messages =
+            document.getElementById(
+                "messages"
+            );
+
+
+        if (messages) {
+
+            messages.innerHTML = `
+
+                <div class="message support">
+
+                    <div class="support-profile">
+
+                        <img
+                            src="./atendente1.png"
+                            alt="Atendente"
+                        >
+
+                        <div>
+
+                            <strong>
+                                Yuki Support
+                            </strong>
+
+                            <span>
+                                🟢 Atendente online
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="support-text">
+
+                        Olá! 👋
+
+                        <br><br>
+
+                        Entre na sua conta
+                        para iniciar um atendimento.
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao sair:",
+            erro
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   INFORMAÇÕES DA CONTA
+========================================= */
+
+function mostrarInformacoesConta() {
+
+    alert(
+        "Conta Yuki Studio\n\n" +
+        "Usuário: " +
+        (clienteUsuario || "Cliente")
+    );
 
 }
 
@@ -98,7 +1046,11 @@ async function iniciarChat() {
 
 async function recuperarAtendimento() {
 
-    if (!clienteUID) return;
+    if (!clienteUID) {
+
+        return;
+
+    }
 
 
     const {
@@ -142,12 +1094,16 @@ async function recuperarAtendimento() {
     }
 
 
-    if (data && data.length > 0) {
+    if (
+        data &&
+        data.length > 0
+    ) {
 
         atendimentoAtual =
             data[0];
 
-        atendimentoEncerrado = false;
+        atendimentoEncerrado =
+            false;
 
 
         definirAtendenteVisual(
@@ -194,13 +1150,31 @@ function definirAtendenteVisual(
 
 function abrirChat() {
 
+    /*
+       Agora o suporte exige conta.
+    */
+
+    if (!clienteUID) {
+
+        abrirLogin();
+
+        mostrarMensagemAuth(
+            "Entre ou crie uma conta para falar com o suporte."
+        );
+
+        return;
+
+    }
+
+
     const chat =
         document.getElementById(
             "chatWindow"
         );
 
 
-    chat.style.display = "flex";
+    chat.style.display =
+        "flex";
 
 
     const botao =
@@ -209,7 +1183,8 @@ function abrirChat() {
         );
 
 
-    botao.style.display = "none";
+    botao.style.display =
+        "none";
 
 
     const input =
@@ -241,12 +1216,14 @@ function fecharChat() {
 
     document.getElementById(
         "chatWindow"
-    ).style.display = "none";
+    ).style.display =
+        "none";
 
 
     document.getElementById(
         "chatButton"
-    ).style.display = "block";
+    ).style.display =
+        "block";
 
 }
 
@@ -257,7 +1234,8 @@ function fecharChat() {
 
 function prepararNovoAtendimento() {
 
-    atendimentoEncerrado = false;
+    atendimentoEncerrado =
+        false;
 
 
     const input =
@@ -272,15 +1250,24 @@ function prepararNovoAtendimento() {
         );
 
 
-    input.disabled = false;
+    input.disabled =
+        false;
 
-    botaoEnviar.disabled = false;
+
+    botaoEnviar.disabled =
+        false;
 
 
     const messages =
         document.getElementById(
             "messages"
         );
+
+
+    const foto =
+        atendenteAtual === 2
+            ? "atendente2.png"
+            : "atendente1.png";
 
 
     messages.innerHTML = `
@@ -290,7 +1277,7 @@ function prepararNovoAtendimento() {
             <div class="support-profile">
 
                 <img
-                    src="./atendente1.png"
+                    src="./${foto}"
                     alt="Atendente"
                 >
 
@@ -352,21 +1339,12 @@ async function criarAtendimento() {
 
     if (!clienteUID) {
 
-        alert(
-            "Aguarde alguns segundos enquanto conectamos ao suporte."
-        );
+        abrirLogin();
 
         return null;
 
     }
 
-
-    /*
-       O atendente NÃO é escolhido pelo navegador.
-
-       O banco de dados possui um trigger que
-       define automaticamente Atendente 1 ou 2.
-    */
 
     const {
         data,
@@ -384,7 +1362,7 @@ async function criarAtendimento() {
                 clienteUID,
 
             cliente_nome:
-                "Cliente",
+                clienteUsuario || "Cliente",
 
             status:
                 "aguardando"
@@ -420,11 +1398,6 @@ async function criarAtendimento() {
         false;
 
 
-    /*
-       O banco decidiu qual atendente foi
-       responsável pela conversa.
-    */
-
     definirAtendenteVisual(
         data.atendente
     );
@@ -444,7 +1417,11 @@ async function criarAtendimento() {
 
 function iniciarRealtime() {
 
-    if (!atendimentoAtual) return;
+    if (!atendimentoAtual) {
+
+        return;
+
+    }
 
 
     if (canalMensagens) {
@@ -514,6 +1491,15 @@ async function enviarMensagem() {
     }
 
 
+    if (!clienteUID) {
+
+        abrirLogin();
+
+        return;
+
+    }
+
+
     const input =
         document.getElementById(
             "messageInput"
@@ -548,11 +1534,6 @@ async function enviarMensagem() {
 
     input.value = "";
 
-
-    /*
-       Mostra imediatamente a mensagem
-       no lado do cliente.
-    */
 
     mostrarMensagemCliente(
         texto
@@ -604,11 +1585,6 @@ async function enviarMensagem() {
 function receberMensagem(
     mensagem
 ) {
-
-    /*
-       Não mostra novamente a mensagem
-       que foi enviada pelo próprio cliente.
-    */
 
     if (
         mensagem.remetente ===
@@ -756,7 +1732,8 @@ async function encerrarAtendimento() {
     }
 
 
-    atendimentoEncerrado = true;
+    atendimentoEncerrado =
+        true;
 
 
     const {
@@ -808,9 +1785,12 @@ async function encerrarAtendimento() {
         );
 
 
-    input.disabled = true;
+    input.disabled =
+        true;
 
-    botaoEnviar.disabled = true;
+
+    botaoEnviar.disabled =
+        true;
 
 
     if (canalMensagens) {
@@ -819,7 +1799,8 @@ async function encerrarAtendimento() {
             canalMensagens
         );
 
-        canalMensagens = null;
+        canalMensagens =
+            null;
 
     }
 
@@ -1019,6 +2000,19 @@ async function carregarHistorico() {
         );
 
         return;
+
+    }
+
+
+    const messages =
+        document.getElementById(
+            "messages"
+        );
+
+
+    if (messages) {
+
+        messages.innerHTML = "";
 
     }
 
