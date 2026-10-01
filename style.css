@@ -1,3 +1,7 @@
+/* ============================= */
+/* CONFIGURAÇÕES GERAIS           */
+/* ============================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -9,76 +13,92 @@ html {
 }
 
 body {
+
     font-family: Arial, Helvetica, sans-serif;
+
     min-height: 100vh;
+
     color: white;
 
-    /* IMAGEM DE FUNDO */
-    background:
+    background-color: #020403;
+
+    /* IMAGEM DO LAGARTO */
+    background-image:
         linear-gradient(
-            135deg,
-            rgba(0, 0, 0, 0.92),
-            rgba(0, 55, 20, 0.78),
-            rgba(0, 0, 0, 0.94)
+            rgba(0, 20, 8, 0.35),
+            rgba(0, 0, 0, 0.65)
         ),
-        url("lagarto.png");
+        url("./lagarto.png");
 
     background-size: cover;
+
     background-position: center;
-    background-attachment: fixed;
+
     background-repeat: no-repeat;
+
+    background-attachment: fixed;
 }
 
 
-/* =========================
-   CABEÇALHO
-========================= */
+/* ============================= */
+/* CABEÇALHO                     */
+/* ============================= */
 
 header {
+
     position: fixed;
+
     top: 0;
     left: 0;
 
     width: 100%;
+
     height: 75px;
 
-    padding: 0 7%;
-
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
+    padding: 0 6%;
+
+    z-index: 1000;
 
     background: rgba(0, 0, 0, 0.65);
 
     backdrop-filter: blur(12px);
 
-    border-bottom: 1px solid rgba(0, 255, 100, 0.18);
-
-    z-index: 900;
+    border-bottom: 1px solid rgba(0, 255, 100, 0.15);
 }
 
 
 .logo {
-    font-size: 26px;
+
+    font-size: 22px;
+
     font-weight: bold;
 
-    color: #62ff8a;
+    letter-spacing: 3px;
 
-    letter-spacing: 1px;
+    color: #5cff9b;
 
     text-shadow:
-        0 0 10px rgba(0, 255, 100, 0.4);
+        0 0 10px rgba(0, 255, 100, 0.6);
 }
 
 
 nav {
+
     display: flex;
+
     gap: 30px;
 }
 
 
 nav a {
-    color: #ddd;
+
+    color: white;
 
     text-decoration: none;
 
@@ -89,25 +109,17 @@ nav a {
 
 
 nav a:hover {
-    color: #62ff8a;
+
+    color: #52ff91;
 
     text-shadow:
-        0 0 10px rgba(0, 255, 100, 0.5);
+        0 0 10px rgba(0, 255, 100, 0.6);
 }
 
 
-/* =========================
-   ÁREA PRINCIPAL
-========================= */
-
-main {
-    min-height: 100vh;
-}
-
-
-/* =========================
-   HERO
-========================= */
+/* ============================= */
+/* HERO                          */
+/* ============================= */
 
 .hero {
 
@@ -115,74 +127,107 @@ main {
 
     display: flex;
 
-    justify-content: center;
     align-items: center;
+
+    justify-content: center;
 
     text-align: center;
 
-    padding: 100px 20px 50px;
+    padding: 100px 20px 60px;
+
+    position: relative;
 
     background:
         radial-gradient(
             circle at center,
-            rgba(0, 255, 90, 0.12),
-            transparent 45%
+            rgba(0, 120, 50, 0.15),
+            rgba(0, 0, 0, 0.25) 60%,
+            rgba(0, 0, 0, 0.55)
         );
 }
 
 
 .hero-content {
-    max-width: 850px;
 
-    padding: 50px;
+    max-width: 800px;
 
-    background: rgba(0, 0, 0, 0.45);
-
-    border: 1px solid rgba(98, 255, 138, 0.2);
+    padding: 40px;
 
     border-radius: 25px;
 
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.38);
+
+    border: 1px solid rgba(90, 255, 140, 0.2);
+
+    backdrop-filter: blur(5px);
 
     box-shadow:
-        0 0 50px rgba(0, 255, 100, 0.08);
+        0 20px 80px rgba(0, 0, 0, 0.5);
+}
+
+
+.tag {
+
+    display: inline-block;
+
+    color: #59ff98;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 20px;
 }
 
 
 .hero h1 {
 
-    font-size: clamp(40px, 6vw, 75px);
+    font-size: clamp(42px, 7vw, 80px);
 
-    margin-bottom: 20px;
+    line-height: 1.05;
 
-    color: white;
+    margin-bottom: 25px;
+}
+
+
+.hero h1 span {
+
+    color: #59ff98;
 
     text-shadow:
-        0 0 25px rgba(0, 255, 100, 0.35);
+        0 0 20px rgba(0, 255, 100, 0.35);
 }
 
 
 .hero p {
 
-    font-size: 20px;
+    color: #d4d4d4;
 
-    color: #d0d0d0;
+    font-size: 18px;
 
-    margin-bottom: 35px;
+    line-height: 1.7;
+
+    margin-bottom: 30px;
 }
 
 
-.hero button {
+/* ============================= */
+/* BOTÕES                        */
+/* ============================= */
+
+.main-button {
 
     border: none;
 
-    padding: 16px 30px;
+    padding: 15px 25px;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
-    background: #21d85b;
+    background: #36e875;
 
-    color: #001b08;
+    color: #001b09;
 
     font-size: 16px;
 
@@ -193,70 +238,81 @@ main {
     transition: 0.3s;
 
     box-shadow:
-        0 0 25px rgba(33, 216, 91, 0.25);
+        0 0 25px rgba(54, 232, 117, 0.25);
 }
 
 
-.hero button:hover {
+.main-button:hover {
 
     transform: translateY(-3px);
 
-    background: #62ff8a;
+    background: #62ff9a;
 
     box-shadow:
-        0 0 35px rgba(33, 216, 91, 0.5);
+        0 0 35px rgba(54, 232, 117, 0.5);
 }
 
 
-/* =========================
-   SEÇÕES
-========================= */
+/* ============================= */
+/* SEÇÕES                        */
+/* ============================= */
 
 .section {
 
-    min-height: 500px;
+    min-height: 80vh;
 
-    padding: 100px 8%;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 100px 20px;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+
+.section-content {
+
+    width: 100%;
+
+    max-width: 1100px;
 
     text-align: center;
-
-    background:
-        rgba(0, 0, 0, 0.70);
-
-    border-top:
-        1px solid rgba(98, 255, 138, 0.08);
 }
 
 
 .section h2 {
 
-    font-size: 40px;
+    font-size: 48px;
 
-    margin-bottom: 25px;
-
-    color: #62ff8a;
+    margin-bottom: 20px;
 }
 
 
 .section p {
 
-    color: #ccc;
+    color: #cfcfcf;
 
     font-size: 17px;
+
+    line-height: 1.7;
 }
 
 
-/* =========================
-   CARDS
-========================= */
+/* ============================= */
+/* CARDS                         */
+/* ============================= */
 
 .cards {
 
-    display: flex;
+    display: grid;
 
-    justify-content: center;
-
-    flex-wrap: wrap;
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 25px;
 
@@ -266,20 +322,15 @@ main {
 
 .card {
 
-    width: 280px;
-
     padding: 35px 25px;
 
-    background:
-        rgba(0, 20, 8, 0.75);
+    border-radius: 20px;
 
-    border:
+    background: rgba(2, 12, 7, 0.75);
 
-        1px solid rgba(98, 255, 138, 0.15);
+    border: 1px solid rgba(80, 255, 140, 0.15);
 
-    border-radius: 18px;
-
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
 
     transition: 0.3s;
 }
@@ -289,33 +340,42 @@ main {
 
     transform: translateY(-8px);
 
-    border-color:
-        rgba(98, 255, 138, 0.5);
+    border-color: rgba(80, 255, 140, 0.5);
 
     box-shadow:
-        0 0 30px rgba(0, 255, 100, 0.12);
+        0 15px 50px rgba(0, 255, 100, 0.12);
+}
+
+
+.card-icon {
+
+    font-size: 40px;
+
+    margin-bottom: 20px;
 }
 
 
 .card h3 {
 
-    color: #62ff8a;
+    color: #5cff9b;
 
     margin-bottom: 15px;
+
+    font-size: 22px;
 }
 
 
-/* =========================
-   BOTÃO DO CHAT
-========================= */
+/* ============================= */
+/* BOTÃO FLUTUANTE               */
+/* ============================= */
 
 #chatButton {
 
     position: fixed;
 
-    right: 30px;
+    right: 25px;
 
-    bottom: 30px;
+    bottom: 25px;
 
     width: 65px;
 
@@ -323,96 +383,94 @@ main {
 
     border-radius: 50%;
 
-    border: 1px solid rgba(98, 255, 138, 0.5);
+    border: none;
 
-    background:
-        linear-gradient(
-            135deg,
-            #21d85b,
-            #087f32
-        );
+    background: #39ed7b;
 
-    color: white;
+    color: #001b09;
 
-    font-size: 28px;
+    font-size: 25px;
 
     cursor: pointer;
 
+    z-index: 2000;
+
     box-shadow:
-        0 0 30px rgba(0, 255, 100, 0.25);
+        0 0 30px rgba(50, 255, 120, 0.4);
 
     transition: 0.3s;
-
-    z-index: 1000;
 }
 
 
 #chatButton:hover {
 
-    transform: scale(1.08);
+    transform: scale(1.1);
 
     box-shadow:
-        0 0 40px rgba(0, 255, 100, 0.5);
+        0 0 45px rgba(50, 255, 120, 0.7);
 }
 
 
-/* =========================
-   JANELA DO CHAT
-========================= */
+/* ============================= */
+/* CHAT                          */
+/* ============================= */
 
 #chatWindow {
 
     position: fixed;
 
-    right: 30px;
+    right: 25px;
 
-    bottom: 110px;
+    bottom: 25px;
 
-    width: 390px;
+    width: 400px;
 
-    height: 580px;
-
-    background:
-        rgba(3, 10, 6, 0.94);
-
-    border:
-
-        1px solid rgba(98, 255, 138, 0.25);
-
-    border-radius: 20px;
-
-    overflow: hidden;
+    height: 600px;
 
     display: none;
 
     flex-direction: column;
 
-    backdrop-filter: blur(18px);
+    z-index: 3000;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(90, 255, 140, 0.3);
+
+    /*
+       IMPORTANTE:
+       Deixamos transparente para o
+       lagarto continuar aparecendo.
+    */
+    background:
+        linear-gradient(
+            rgba(1, 12, 6, 0.72),
+            rgba(1, 8, 4, 0.82)
+        ),
+        url("./lagarto.png");
+
+    background-size: cover;
+
+    background-position: center;
 
     box-shadow:
-        0 20px 70px rgba(0, 0, 0, 0.7),
-        0 0 40px rgba(0, 255, 100, 0.08);
+        0 20px 80px rgba(0, 0, 0, 0.75);
 
-    z-index: 999;
+    backdrop-filter: blur(8px);
 }
 
 
-/* =========================
-   CABEÇALHO DO CHAT
-========================= */
+/* ============================= */
+/* CABEÇALHO DO CHAT             */
+/* ============================= */
 
 .chat-header {
 
-    min-height: 70px;
+    min-height: 75px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #087f32,
-            #052b14
-        );
-
-    color: white;
+    padding: 15px 20px;
 
     display: flex;
 
@@ -420,10 +478,9 @@ main {
 
     justify-content: space-between;
 
-    padding: 15px 20px;
+    background: rgba(0, 20, 10, 0.8);
 
-    border-bottom:
-        1px solid rgba(98, 255, 138, 0.15);
+    border-bottom: 1px solid rgba(80, 255, 140, 0.15);
 }
 
 
@@ -431,19 +488,19 @@ main {
 
     display: block;
 
-    font-size: 17px;
+    font-size: 18px;
+
+    color: white;
+
+    margin-bottom: 5px;
 }
 
 
 .chat-header span {
 
-    display: block;
-
-    margin-top: 3px;
-
     font-size: 12px;
 
-    color: #8cffaa;
+    color: #5cff98;
 }
 
 
@@ -455,15 +512,23 @@ main {
 
     color: white;
 
-    font-size: 28px;
+    font-size: 30px;
 
     cursor: pointer;
+
+    line-height: 1;
 }
 
 
-/* =========================
-   MENSAGENS
-========================= */
+.chat-header button:hover {
+
+    color: #59ff98;
+}
+
+
+/* ============================= */
+/* MENSAGENS                     */
+/* ============================= */
 
 .messages {
 
@@ -473,76 +538,65 @@ main {
 
     overflow-y: auto;
 
-    background:
-        rgba(0, 0, 0, 0.35);
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
 }
 
 
 .message {
 
-    max-width: 82%;
+    max-width: 80%;
 
     padding: 13px 16px;
 
-    margin-bottom: 14px;
-
     border-radius: 15px;
 
-    line-height: 1.45;
-
     font-size: 14px;
+
+    line-height: 1.5;
 }
 
 
-.support {
+.message.support {
 
-    background:
-        rgba(255, 255, 255, 0.07);
+    align-self: flex-start;
 
-    color: #eee;
+    background: rgba(30, 80, 45, 0.85);
 
-    border:
-        1px solid rgba(255, 255, 255, 0.1);
-
-    margin-right: auto;
+    border: 1px solid rgba(90, 255, 140, 0.12);
 }
 
 
-.user {
+.message.user {
 
-    background:
-        linear-gradient(
-            135deg,
-            #21d85b,
-            #087f32
-        );
+    align-self: flex-end;
 
-    color: white;
+    background: #35e874;
 
-    margin-left: auto;
+    color: #001b09;
 
-    box-shadow:
-        0 5px 15px rgba(0, 255, 100, 0.12);
+    font-weight: 500;
 }
 
 
-/* =========================
-   CAMPO DE MENSAGEM
-========================= */
+/* ============================= */
+/* CAMPO DE TEXTO                */
+/* ============================= */
 
 .chat-input {
 
     display: flex;
 
-    padding: 12px;
+    gap: 10px;
 
-    gap: 8px;
+    padding: 15px;
 
-    border-top:
-        1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 10, 5, 0.85);
 
-    background:
-        rgba(0, 0, 0, 0.55);
+    border-top: 1px solid rgba(90, 255, 140, 0.15);
 }
 
 
@@ -550,17 +604,17 @@ main {
 
     flex: 1;
 
-    border:
-        1px solid rgba(98, 255, 138, 0.18);
+    min-width: 0;
 
-    border-radius: 10px;
+    padding: 13px 15px;
 
-    padding: 13px;
+    border-radius: 12px;
+
+    border: 1px solid rgba(90, 255, 140, 0.2);
 
     outline: none;
 
-    background:
-        rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
 
     color: white;
 
@@ -570,14 +624,16 @@ main {
 
 .chat-input input::placeholder {
 
-    color: #888;
+    color: #999;
 }
 
 
 .chat-input input:focus {
 
-    border-color:
-        rgba(98, 255, 138, 0.5);
+    border-color: #4dff91;
+
+    box-shadow:
+        0 0 12px rgba(70, 255, 140, 0.15);
 }
 
 
@@ -587,71 +643,67 @@ main {
 
     border: none;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
-    background:
-        #21d85b;
+    background: #39ed7b;
 
-    color: #001b08;
-
-    cursor: pointer;
+    color: #001b09;
 
     font-size: 20px;
 
-    font-weight: bold;
-
-    transition: 0.2s;
+    cursor: pointer;
 }
 
 
 .chat-input button:hover {
 
-    background:
-        #62ff8a;
-
-    transform: scale(1.04);
+    background: #64ff9c;
 }
 
 
-/* =========================
-   SCROLLBAR
-========================= */
+/* ============================= */
+/* BARRA DE ROLAGEM              */
+/* ============================= */
 
-::-webkit-scrollbar {
+.messages::-webkit-scrollbar {
 
-    width: 7px;
+    width: 5px;
 }
 
 
-::-webkit-scrollbar-track {
+.messages::-webkit-scrollbar-track {
 
-    background: #020603;
+    background: transparent;
 }
 
 
-::-webkit-scrollbar-thumb {
+.messages::-webkit-scrollbar-thumb {
 
-    background: #126d31;
+    background: #35e874;
 
     border-radius: 10px;
 }
 
 
-::-webkit-scrollbar-thumb:hover {
+/* ============================= */
+/* CELULAR                       */
+/* ============================= */
 
-    background: #21d85b;
-}
-
-
-/* =========================
-   CELULAR
-========================= */
-
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
     header {
 
+        height: 65px;
+
         padding: 0 20px;
+    }
+
+
+    .logo {
+
+        font-size: 17px;
+
+        letter-spacing: 2px;
     }
 
 
@@ -669,30 +721,52 @@ main {
 
     .hero-content {
 
-        padding: 35px 20px;
-
-        width: 100%;
+        padding: 30px 20px;
     }
 
 
-    #chatWindow {
+    .hero h1 {
 
-        right: 10px;
+        font-size: 42px;
+    }
 
-        bottom: 90px;
 
-        width: calc(100% - 20px);
+    .hero p {
 
-        height: calc(100vh - 110px);
+        font-size: 16px;
+    }
 
-        border-radius: 18px;
+
+    .cards {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .section h2 {
+
+        font-size: 36px;
     }
 
 
     #chatButton {
 
-        right: 15px;
+        right: 18px;
 
-        bottom: 15px;
+        bottom: 18px;
+    }
+
+
+    #chatWindow {
+
+        width: calc(100% - 20px);
+
+        height: calc(100vh - 85px);
+
+        right: 10px;
+
+        bottom: 10px;
+
+        border-radius: 18px;
     }
 }
