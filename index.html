@@ -54,6 +54,35 @@
 
         </nav>
 
+
+        <!-- ÁREA DA CONTA -->
+
+        <div class="account-area">
+
+            <button
+                id="loginButton"
+                class="account-button"
+                onclick="abrirLogin()"
+            >
+
+                👤 Entrar
+
+            </button>
+
+
+            <button
+                id="logoutButton"
+                class="account-button"
+                onclick="sairConta()"
+                style="display: none;"
+            >
+
+                Sair
+
+            </button>
+
+        </div>
+
     </header>
 
 
@@ -632,8 +661,195 @@
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./script.js"></script>
+    <!-- =========================================
+         MODAL DE LOGIN / CADASTRO
+    ========================================== -->
+
+    <div
+        id="authModal"
+        class="auth-modal"
+        style="display: none;"
+    >
+
+        <div class="auth-box">
+
+
+            <!-- FECHAR -->
+
+            <button
+                class="auth-close"
+                onclick="fecharLogin()"
+            >
+
+                ×
+
+            </button>
+
+
+            <!-- LOGIN -->
+
+            <div id="loginForm">
+
+                <span class="tag">
+                    YUKI STUDIO
+                </span>
+
+
+                <h2>
+                    Entrar
+                </h2>
+
+
+                <p>
+                    Entre na sua conta para acessar o suporte.
+                </p>
+
+
+                <input
+                    type="text"
+                    id="loginUsuario"
+                    placeholder="Usuário"
+                    autocomplete="username"
+                >
+
+
+                <input
+                    type="password"
+                    id="loginSenha"
+                    placeholder="Senha"
+                    autocomplete="current-password"
+                >
+
+
+                <button
+                    class="main-button auth-submit"
+                    onclick="fazerLogin()"
+                >
+
+                    🔐 Entrar
+
+                </button>
+
+
+                <p class="auth-switch">
+
+                    Ainda não possui uma conta?
+
+                    <button
+                        onclick="mostrarCadastro()"
+                    >
+
+                        Criar conta
+
+                    </button>
+
+                </p>
+
+            </div>
+
+
+
+            <!-- CADASTRO -->
+
+            <div
+                id="cadastroForm"
+                style="display: none;"
+            >
+
+                <span class="tag">
+                    YUKI STUDIO
+                </span>
+
+
+                <h2>
+                    Criar conta
+                </h2>
+
+
+                <p>
+                    Crie sua conta para utilizar nosso suporte.
+                </p>
+
+
+                <input
+                    type="text"
+                    id="cadastroUsuario"
+                    placeholder="Escolha um usuário"
+                    autocomplete="username"
+                >
+
+
+                <input
+                    type="password"
+                    id="cadastroSenha"
+                    placeholder="Senha"
+                    autocomplete="new-password"
+                >
+
+
+                <input
+                    type="password"
+                    id="cadastroConfirmarSenha"
+                    placeholder="Confirmar senha"
+                    autocomplete="new-password"
+                >
+
+
+                <button
+                    class="main-button auth-submit"
+                    onclick="criarConta()"
+                >
+
+                    📝 Criar conta
+
+                </button>
+
+
+                <p class="auth-switch">
+
+                    Já possui uma conta?
+
+                    <button
+                        onclick="mostrarLogin()"
+                    >
+
+                        Entrar
+
+                    </button>
+
+                </p>
+
+            </div>
+
+
+            <!-- MENSAGEM DE ERRO/SUCESSO -->
+
+            <div
+                id="authMensagem"
+                class="auth-message"
+            ></div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- SUPABASE -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- SCRIPT DO SITE -->
+
+    <script
+        src="./script.js"
+    ></script>
+
 
 </body>
+
 </html>
