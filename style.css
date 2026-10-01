@@ -1213,3 +1213,289 @@ footer .copyright {
         rgba(255, 100, 100, 0.3);
 
 }
+/* =========================================
+   LOGIN / CADASTRO
+========================================= */
+
+.auth-modal {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+
+.auth-box {
+    position: relative;
+
+    width: 100%;
+    max-width: 420px;
+
+    background: #101510;
+
+    border: 1px solid rgba(74, 255, 126, 0.25);
+
+    border-radius: 18px;
+
+    padding: 35px;
+
+    box-sizing: border-box;
+
+    box-shadow:
+        0 20px 70px rgba(0, 0, 0, 0.6),
+        0 0 35px rgba(74, 255, 126, 0.08);
+
+    animation: authAppear 0.25s ease;
+}
+
+
+@keyframes authAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+.auth-box h2 {
+
+    margin-top: 12px;
+    margin-bottom: 10px;
+
+}
+
+
+.auth-box p {
+
+    color: #a9b4aa;
+
+    line-height: 1.6;
+
+}
+
+
+.auth-box input {
+
+    display: block;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-top: 14px;
+
+    padding: 14px 16px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    background: #080b08;
+
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+
+}
+
+
+.auth-box input:focus {
+
+    border-color: #4aff7e;
+
+    box-shadow:
+        0 0 0 2px rgba(74, 255, 126, 0.08);
+
+}
+
+
+.auth-submit {
+
+    width: 100%;
+
+    margin-top: 18px;
+
+}
+
+
+.auth-close {
+
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    color: white;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.auth-close:hover {
+
+    background: rgba(255, 255, 255, 0.12);
+
+    transform: rotate(90deg);
+
+}
+
+
+.auth-switch {
+
+    text-align: center;
+
+    margin-top: 20px;
+
+    font-size: 14px;
+
+}
+
+
+.auth-switch button {
+
+    border: none;
+
+    background: transparent;
+
+    color: #4aff7e;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    font-size: inherit;
+
+}
+
+
+.auth-switch button:hover {
+
+    text-decoration: underline;
+
+}
+
+
+.auth-message {
+
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 10px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================
+   ÁREA DA CONTA NO CABEÇALHO
+========================================= */
+
+.account-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.account-button {
+
+    border: 1px solid rgba(74, 255, 126, 0.3);
+
+    background: rgba(74, 255, 126, 0.08);
+
+    color: #4aff7e;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+
+}
+
+
+.account-button:hover {
+
+    background: rgba(74, 255, 126, 0.16);
+
+    border-color: #4aff7e;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .auth-box {
+
+        max-width: 100%;
+
+        padding: 28px 22px;
+
+        border-radius: 15px;
+
+    }
+
+
+    .account-area {
+
+        margin-top: 10px;
+
+    }
+
+}
