@@ -1,3 +1,6 @@
+let contadorAtendente = 0;
+
+
 function abrirChat() {
 
     const chat = document.getElementById("chatWindow");
@@ -59,6 +62,17 @@ function enviarMensagem() {
         messages.scrollHeight;
 
 
+    /* ESCOLHE O ATENDENTE */
+
+    const atendente =
+        contadorAtendente % 2 === 0
+            ? "atendente1.png"
+            : "atendente2.png";
+
+
+    contadorAtendente++;
+
+
     /* RESPOSTA DO SUPORTE */
 
     setTimeout(function () {
@@ -75,7 +89,7 @@ function enviarMensagem() {
             <div class="support-profile">
 
                 <img
-                    src="./atendente.png"
+                    src="./${atendente}"
                     alt="Atendente"
                 >
 
@@ -84,7 +98,7 @@ function enviarMensagem() {
                     <strong>Yuki Support</strong>
 
                     <span>
-                        Atendente
+                        🟢 Atendente online
                     </span>
 
                 </div>
@@ -98,9 +112,11 @@ function enviarMensagem() {
                 <br><br>
 
                 Um de nossos atendentes
-                poderá ajudar você em breve.
+                está analisando sua solicitação
+                e vai ajudar você em breve.
 
             </div>
+
         `;
 
 
@@ -108,8 +124,10 @@ function enviarMensagem() {
             supportMessage
         );
 
+
         messages.scrollTop =
             messages.scrollHeight;
+
 
     }, 1000);
 }
