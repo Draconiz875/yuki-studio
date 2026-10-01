@@ -20,6 +20,7 @@
             <a href="#inicio">Início</a>
             <a href="#sobre">Sobre</a>
             <a href="#servicos">Serviços</a>
+            <a href="#depoimentos">Depoimentos</a>
             <a href="#contato">Contato</a>
         </nav>
     </header>
@@ -28,7 +29,7 @@
     <!-- INÍCIO -->
     <main>
 
-        <section id="inicio" class="hero">
+        <section id="inicio" class="hero fade-in">
 
             <div class="hero-content">
 
@@ -54,7 +55,7 @@
 
 
         <!-- SOBRE -->
-        <section id="sobre" class="section">
+        <section id="sobre" class="section fade-in">
 
             <div class="section-content">
 
@@ -73,7 +74,7 @@
 
 
         <!-- SERVIÇOS -->
-        <section id="servicos" class="section">
+        <section id="servicos" class="section fade-in">
 
             <div class="section-content">
 
@@ -85,25 +86,33 @@
 
                     <div class="card">
                         <div class="card-icon">💻</div>
+
                         <h3>Desenvolvimento</h3>
+
                         <p>
                             Desenvolvimento de sites e
                             soluções digitais.
                         </p>
                     </div>
 
+
                     <div class="card">
                         <div class="card-icon">🛠️</div>
+
                         <h3>Suporte</h3>
+
                         <p>
                             Atendimento para ajudar você
                             com suas dúvidas.
                         </p>
                     </div>
 
+
                     <div class="card">
                         <div class="card-icon">🚀</div>
+
                         <h3>Projetos</h3>
+
                         <p>
                             Criação de projetos modernos
                             e personalizados.
@@ -117,8 +126,112 @@
         </section>
 
 
+        <!-- DEPOIMENTOS -->
+        <section id="depoimentos" class="section fade-in">
+
+            <div class="section-content">
+
+                <span class="tag">DEPOIMENTOS</span>
+
+                <h2>O que nossos usuários dizem</h2>
+
+                <p class="review-note">
+                    Depoimentos demonstrativos para apresentação do site.
+                </p>
+
+
+                <div class="reviews">
+
+                    <div class="review-card">
+
+                        <div class="review-user">
+
+                            <img
+                                src="./usuario1.png"
+                                alt="Usuário"
+                            >
+
+                            <div>
+                                <strong>Lucas</strong>
+                                <span>Usuário</span>
+                            </div>
+
+                        </div>
+
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+
+                        <p>
+                            "O atendimento foi rápido e consegui
+                            resolver minha dúvida sem complicação."
+                        </p>
+
+                    </div>
+
+
+                    <div class="review-card">
+
+                        <div class="review-user">
+
+                            <div class="avatar-placeholder">
+                                M
+                            </div>
+
+                            <div>
+                                <strong>Mariana</strong>
+                                <span>Usuária</span>
+                            </div>
+
+                        </div>
+
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+
+                        <p>
+                            "Gostei bastante do suporte. A equipe
+                            foi muito atenciosa e explicou tudo."
+                        </p>
+
+                    </div>
+
+
+                    <div class="review-card">
+
+                        <div class="review-user">
+
+                            <div class="avatar-placeholder">
+                                R
+                            </div>
+
+                            <div>
+                                <strong>Rafael</strong>
+                                <span>Usuário</span>
+                            </div>
+
+                        </div>
+
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+
+                        <p>
+                            "Site simples de usar e o suporte
+                            facilita bastante o atendimento."
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
         <!-- CONTATO -->
-        <section id="contato" class="section">
+        <section id="contato" class="section fade-in">
 
             <div class="section-content">
 
@@ -131,6 +244,8 @@
                     sistema de suporte.
                 </p>
 
+                <br>
+
                 <button class="main-button" onclick="abrirChat()">
                     💬 Abrir suporte
                 </button>
@@ -142,23 +257,47 @@
     </main>
 
 
+    <!-- RODAPÉ -->
+    <footer>
+
+        <div class="footer-logo">
+            YUKI STUDIO
+        </div>
+
+        <p>
+            Suporte e soluções digitais.
+        </p>
+
+        <p class="cnpj">
+            CNPJ: 46.018.667/0001-12
+        </p>
+
+        <p class="copyright">
+            © 2026 Yuki Studio. Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+
     <!-- BOTÃO FLUTUANTE -->
     <button id="chatButton" onclick="abrirChat()">
         💬
     </button>
 
 
-    <!-- JANELA DO CHAT -->
+    <!-- CHAT -->
     <div id="chatWindow">
 
         <div class="chat-header">
 
             <div>
+
                 <strong>Yuki Support</strong>
 
                 <span>
                     🟢 Online
                 </span>
+
             </div>
 
             <button onclick="fecharChat()">
@@ -171,10 +310,31 @@
         <div id="messages" class="messages">
 
             <div class="message support">
-                Olá! 👋
-                <br><br>
-                Seja bem-vindo ao suporte da Yuki Studio.
-                Como podemos ajudar?
+
+                <div class="support-profile">
+
+                    <img
+                        src="./atendente.png"
+                        alt="Atendente"
+                    >
+
+                    <div>
+                        <strong>Yuki Support</strong>
+                        <span>Atendente</span>
+                    </div>
+
+                </div>
+
+                <div class="support-text">
+
+                    Olá! 👋
+                    <br><br>
+
+                    Seja bem-vindo ao suporte da Yuki Studio.
+                    Como podemos ajudar?
+
+                </div>
+
             </div>
 
         </div>
