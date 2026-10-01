@@ -1,34 +1,20 @@
-/* ========================================= */
-/* YUKI STUDIO - CHAT EM TEMPO REAL          */
-/* ========================================= */
-
-
-/* ========================================= */
-/* CONFIGURAÇÃO SUPABASE                     */
-/* ========================================= */
-
-const SUPABASE_URL =
-    "https://moaeniuahyipcklspjbs.supabase.co";
+const SUPABASE_URL = "https://moaeniuahyipcklspjbs.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_DZ_bN0dLHYZ9LbBJR5vB7Q_viUUgnvQ";
 
-
-const db =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-/* ========================================= */
-/* VARIÁVEIS DO ATENDIMENTO                  */
-/* ========================================= */
+/* =========================================
+   VARIÁVEIS
+========================================= */
 
 let clienteUID = null;
-
 let atendimentoAtual = null;
-
 let canalMensagens = null;
 
 let atendenteAtual =
@@ -37,9 +23,9 @@ let atendenteAtual =
 let atendimentoEncerrado = false;
 
 
-/* ========================================= */
-/* INICIALIZAÇÃO                             */
-/* ========================================= */
+/* =========================================
+   INICIALIZAÇÃO
+========================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -51,39 +37,52 @@ async function iniciarChat() {
 
     try {
 
-        /*
-            Cria uma identidade temporária
-            para o visitante.
-        */
-
+        // Verifica se já existe uma sessão
         const {
-
-            data,
-            error
-
-        } = await db.auth.signInAnonymously();
+            data: sessaoAtual
+        } = await db.auth.getSession();
 
 
-        if (error) {
+        if (sessaoAtual.session) {
 
-            console.error(
-                "Erro ao criar sessão:",
+            clienteUID =
+                sessaoAtual.session.user.id;
+
+        } else {
+
+            // Cria sessão anônima
+            const {
+                data,
                 error
-            );
+            } = await db.auth.signInAnonymously();
 
-            return;
+
+            if (error) {
+
+                console.error(
+                    "Erro ao criar sessão:",
+                    error
+                );
+
+                return;
+
+            }
+
+
+            clienteUID =
+                data.user.id;
 
         }
-
-
-        clienteUID =
-            data.user.id;
 
 
         console.log(
             "Cliente conectado:",
             clienteUID
         );
+
+
+        // Verifica se existe atendimento aberto
+        await recuperarAtendimento();
 
 
     } catch (erro) {
@@ -98,9 +97,77 @@ async function iniciarChat() {
 }
 
 
-/* ========================================= */
-/* ABRIR CHAT                                */
-/* ========================================= */
+
+/* =========================================
+   RECUPERAR ATENDIMENTO EXISTENTE
+========================================= */
+
+async function recuperarAtendimento() {
+
+    if (!clienteUID) return;
+
+
+    const {
+        data,
+        error
+    } = await db
+
+        .from("atendimentos")
+
+        .select("*")
+
+        .eq(
+            "cliente_uid",
+            clienteUID
+        )
+
+        .neq(
+            "status",
+            "encerrado"
+        )
+
+        .order(
+            "criado_em",
+            {
+                ascending: false
+            }
+        )
+
+        .limit(1);
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao recuperar atendimento:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if (data && data.length > 0) {
+
+        atendimentoAtual =
+            data[0];
+
+        atendimentoEncerrado = false;
+
+        iniciarRealtime();
+
+        await carregarHistorico();
+
+    }
+
+}
+
+
+
+/* =========================================
+   ABRIR CHAT
+========================================= */
 
 function abrirChat() {
 
@@ -131,14 +198,8 @@ function abrirChat() {
     input.focus();
 
 
-    /*
-        Se ainda não existe atendimento,
-        prepara uma nova conversa.
-    */
-
     if (
-        !atendimentoAtual
-        &&
+        !atendimentoAtual &&
         !atendimentoEncerrado
     ) {
 
@@ -149,40 +210,33 @@ function abrirChat() {
 }
 
 
-/* ========================================= */
-/* FECHAR CHAT                               */
-/* ========================================= */
+
+/* =========================================
+   FECHAR CHAT
+========================================= */
 
 function fecharChat() {
 
-    const chat =
-        document.getElementById(
-            "chatWindow"
-        );
+    document.getElementById(
+        "chatWindow"
+    ).style.display = "none";
 
 
-    chat.style.display = "none";
-
-
-    const botao =
-        document.getElementById(
-            "chatButton"
-        );
-
-
-    botao.style.display = "block";
+    document.getElementById(
+        "chatButton"
+    ).style.display = "block";
 
 }
 
 
-/* ========================================= */
-/* PREPARAR NOVO ATENDIMENTO                 */
-/* ========================================= */
+
+/* =========================================
+   PREPARAR NOVO ATENDIMENTO
+========================================= */
 
 function prepararNovoAtendimento() {
 
-    atendimentoEncerrado =
-        false;
+    atendimentoEncerrado = false;
 
 
     const input =
@@ -199,14 +253,8 @@ function prepararNovoAtendimento() {
 
     input.disabled = false;
 
-
     botaoEnviar.disabled = false;
 
-
-    /*
-        Remove mensagens antigas
-        visualmente.
-    */
 
     const messages =
         document.getElementById(
@@ -260,11 +308,6 @@ function prepararNovoAtendimento() {
     `;
 
 
-    /*
-        Remove botão de novo atendimento
-        caso exista.
-    */
-
     const novo =
         document.getElementById(
             "novoAtendimentoButton"
@@ -280,9 +323,10 @@ function prepararNovoAtendimento() {
 }
 
 
-/* ========================================= */
-/* CRIAR ATENDIMENTO                         */
-/* ========================================= */
+
+/* =========================================
+   CRIAR ATENDIMENTO
+========================================= */
 
 async function criarAtendimento() {
 
@@ -298,10 +342,8 @@ async function criarAtendimento() {
 
 
     const {
-
         data,
         error
-
     } = await db
 
         .from("atendimentos")
@@ -347,12 +389,9 @@ async function criarAtendimento() {
     }
 
 
-    atendimentoAtual =
-        data;
+    atendimentoAtual = data;
 
-
-    atendimentoEncerrado =
-        false;
+    atendimentoEncerrado = false;
 
 
     iniciarRealtime();
@@ -363,22 +402,15 @@ async function criarAtendimento() {
 }
 
 
-/* ========================================= */
-/* CONECTAR MENSAGENS EM TEMPO REAL          */
-/* ========================================= */
+
+/* =========================================
+   REALTIME DAS MENSAGENS
+========================================= */
 
 function iniciarRealtime() {
 
-    if (!atendimentoAtual) {
+    if (!atendimentoAtual) return;
 
-        return;
-
-    }
-
-
-    /*
-        Remove conexão anterior.
-    */
 
     if (canalMensagens) {
 
@@ -390,6 +422,7 @@ function iniciarRealtime() {
 
 
     canalMensagens =
+
         db
 
             .channel(
@@ -418,7 +451,7 @@ function iniciarRealtime() {
 
                 },
 
-                function(payload) {
+                function (payload) {
 
                     receberMensagem(
                         payload.new
@@ -430,13 +463,13 @@ function iniciarRealtime() {
 
             .subscribe();
 
-
 }
 
 
-/* ========================================= */
-/* ENVIAR MENSAGEM                           */
-/* ========================================= */
+
+/* =========================================
+   ENVIAR MENSAGEM DO CLIENTE
+========================================= */
 
 async function enviarMensagem() {
 
@@ -464,11 +497,7 @@ async function enviarMensagem() {
     }
 
 
-    /*
-        Se ainda não existe atendimento,
-        cria um.
-    */
-
+    // Cria atendimento caso ainda não exista
     if (!atendimentoAtual) {
 
         const atendimento =
@@ -484,17 +513,22 @@ async function enviarMensagem() {
     }
 
 
+    // Limpa o campo
     input.value = "";
 
 
-    /*
-        Salva a mensagem no banco.
-    */
+    // MOSTRA A MENSAGEM IMEDIATAMENTE
+    // NO CHAT DO CLIENTE
+
+    mostrarMensagemCliente(
+        texto
+    );
+
+
+    // Salva no Supabase
 
     const {
-
         error
-
     } = await db
 
         .from("mensagens")
@@ -521,31 +555,29 @@ async function enviarMensagem() {
         );
 
 
-        /*
-            Devolve o texto ao campo
-            caso ocorra algum erro.
-        */
+        // Se deu erro, coloca novamente
+        // o texto no campo
 
-        input.value =
-            texto;
+        input.value = texto;
+
+        return;
 
     }
 
 }
 
 
-/* ========================================= */
-/* RECEBER MENSAGEM                          */
-/* ========================================= */
+
+/* =========================================
+   RECEBER MENSAGEM
+========================================= */
 
 function receberMensagem(
     mensagem
 ) {
 
-    /*
-        Ignora mensagens enviadas
-        pelo próprio cliente.
-    */
+    // Ignora mensagens enviadas
+    // pelo próprio cliente
 
     if (
         mensagem.remetente ===
@@ -564,9 +596,10 @@ function receberMensagem(
 }
 
 
-/* ========================================= */
-/* MOSTRAR MENSAGEM DO CLIENTE               */
-/* ========================================= */
+
+/* =========================================
+   MOSTRAR MENSAGEM DO CLIENTE
+========================================= */
 
 function mostrarMensagemCliente(
     texto
@@ -603,9 +636,10 @@ function mostrarMensagemCliente(
 }
 
 
-/* ========================================= */
-/* MOSTRAR MENSAGEM DO ATENDENTE             */
-/* ========================================= */
+
+/* =========================================
+   MOSTRAR MENSAGEM DO ATENDENTE
+========================================= */
 
 function mostrarMensagemAtendente(
     texto
@@ -677,9 +711,10 @@ function mostrarMensagemAtendente(
 }
 
 
-/* ========================================= */
-/* ENCERRAR ATENDIMENTO                      */
-/* ========================================= */
+
+/* =========================================
+   ENCERRAR ATENDIMENTO
+========================================= */
 
 async function encerrarAtendimento() {
 
@@ -693,18 +728,11 @@ async function encerrarAtendimento() {
     }
 
 
-    atendimentoEncerrado =
-        true;
+    atendimentoEncerrado = true;
 
-
-    /*
-        Atualiza o atendimento no banco.
-    */
 
     const {
-
         error
-
     } = await db
 
         .from("atendimentos")
@@ -735,20 +763,10 @@ async function encerrarAtendimento() {
     }
 
 
-    /*
-        Mensagem visual.
-    */
-
     mostrarMensagemAtendente(
-        "✅ Atendimento encerrado.<br><br>" +
-        "Obrigado por entrar em contato " +
-        "com a Yuki Studio!"
+        "✅ Atendimento encerrado.\n\nObrigado por entrar em contato com a Yuki Studio!"
     );
 
-
-    /*
-        Desabilita campo de mensagem.
-    */
 
     const input =
         document.getElementById(
@@ -764,13 +782,11 @@ async function encerrarAtendimento() {
 
     input.disabled = true;
 
-
     botaoEnviar.disabled = true;
 
 
-    /*
-        Troca o atendente SOMENTE agora.
-    */
+    // Alterna o atendente SOMENTE
+    // depois que o atendimento terminou
 
     atendenteAtual =
         atendenteAtual === 1
@@ -784,17 +800,8 @@ async function encerrarAtendimento() {
     );
 
 
-    /*
-        Mostra botão para iniciar
-        um novo atendimento.
-    */
-
     criarBotaoNovoAtendimento();
 
-
-    /*
-        Encerra o canal realtime.
-    */
 
     if (canalMensagens) {
 
@@ -802,21 +809,20 @@ async function encerrarAtendimento() {
             canalMensagens
         );
 
-        canalMensagens =
-            null;
+        canalMensagens = null;
 
     }
 
 
-    atendimentoAtual =
-        null;
+    atendimentoAtual = null;
 
 }
 
 
-/* ========================================= */
-/* NOVO ATENDIMENTO                          */
-/* ========================================= */
+
+/* =========================================
+   BOTÃO NOVO ATENDIMENTO
+========================================= */
 
 function criarBotaoNovoAtendimento() {
 
@@ -863,7 +869,7 @@ function criarBotaoNovoAtendimento() {
 
 
     botao.onclick =
-        function() {
+        function () {
 
             prepararNovoAtendimento();
 
@@ -877,9 +883,10 @@ function criarBotaoNovoAtendimento() {
 }
 
 
-/* ========================================= */
-/* WHATSAPP                                  */
-/* ========================================= */
+
+/* =========================================
+   WHATSAPP
+========================================= */
 
 function abrirWhatsApp() {
 
@@ -908,16 +915,18 @@ function abrirWhatsApp() {
 }
 
 
-/* ========================================= */
-/* ENTER                                     */
-/* ========================================= */
+
+/* =========================================
+   ENTER PARA ENVIAR
+========================================= */
 
 function verificarEnter(
     event
 ) {
 
     if (
-        event.key === "Enter"
+        event.key ===
+        "Enter"
     ) {
 
         event.preventDefault();
@@ -929,9 +938,10 @@ function verificarEnter(
 }
 
 
-/* ========================================= */
-/* ESCAPAR HTML                              */
-/* ========================================= */
+
+/* =========================================
+   PROTEÇÃO CONTRA HTML
+========================================= */
 
 function escaparHTML(
     texto
@@ -956,9 +966,10 @@ function escaparHTML(
 }
 
 
-/* ========================================= */
-/* CARREGAR HISTÓRICO                        */
-/* ========================================= */
+
+/* =========================================
+   CARREGAR HISTÓRICO
+========================================= */
 
 async function carregarHistorico() {
 
@@ -970,10 +981,8 @@ async function carregarHistorico() {
 
 
     const {
-
         data,
         error
-
     } = await db
 
         .from("mensagens")
@@ -988,8 +997,7 @@ async function carregarHistorico() {
         .order(
             "criado_em",
             {
-                ascending:
-                    true
+                ascending: true
             }
         );
 
@@ -1007,8 +1015,7 @@ async function carregarHistorico() {
 
 
     for (
-        const mensagem
-        of data
+        const mensagem of data
     ) {
 
         if (
