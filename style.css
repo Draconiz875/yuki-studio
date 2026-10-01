@@ -4,158 +4,333 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    color: #222;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    color: white;
+
+    /* IMAGEM DE FUNDO */
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.92),
+            rgba(0, 55, 20, 0.78),
+            rgba(0, 0, 0, 0.94)
+        ),
+        url("lagarto.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 
-/* HEADER */
+/* =========================
+   CABEÇALHO
+========================= */
 
 header {
-    height: 70px;
-    background: #111827;
-    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 75px;
+
+    padding: 0 7%;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 8%;
+    background: rgba(0, 0, 0, 0.65);
+
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(0, 255, 100, 0.18);
+
+    z-index: 900;
 }
 
+
 .logo {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
+
+    color: #62ff8a;
+
+    letter-spacing: 1px;
+
+    text-shadow:
+        0 0 10px rgba(0, 255, 100, 0.4);
 }
+
 
 nav {
     display: flex;
-    gap: 25px;
+    gap: 30px;
 }
+
 
 nav a {
-    color: white;
+    color: #ddd;
+
     text-decoration: none;
+
+    font-size: 15px;
+
+    transition: 0.3s;
 }
+
 
 nav a:hover {
-    color: #60a5fa;
+    color: #62ff8a;
+
+    text-shadow:
+        0 0 10px rgba(0, 255, 100, 0.5);
 }
 
 
-/* HERO */
+/* =========================
+   ÁREA PRINCIPAL
+========================= */
+
+main {
+    min-height: 100vh;
+}
+
+
+/* =========================
+   HERO
+========================= */
 
 .hero {
-    min-height: 600px;
+
+    min-height: 100vh;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
     text-align: center;
 
-    background: linear-gradient(
-        135deg,
-        #2563eb,
-        #7c3aed
-    );
+    padding: 100px 20px 50px;
 
-    color: white;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0, 255, 90, 0.12),
+            transparent 45%
+        );
 }
+
 
 .hero-content {
-    max-width: 700px;
-    padding: 30px;
+    max-width: 850px;
+
+    padding: 50px;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    border: 1px solid rgba(98, 255, 138, 0.2);
+
+    border-radius: 25px;
+
+    backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 0 50px rgba(0, 255, 100, 0.08);
 }
+
 
 .hero h1 {
-    font-size: 50px;
+
+    font-size: clamp(40px, 6vw, 75px);
+
     margin-bottom: 20px;
+
+    color: white;
+
+    text-shadow:
+        0 0 25px rgba(0, 255, 100, 0.35);
 }
+
 
 .hero p {
+
     font-size: 20px;
-    margin-bottom: 30px;
+
+    color: #d0d0d0;
+
+    margin-bottom: 35px;
 }
 
+
 .hero button {
+
     border: none;
-    padding: 15px 25px;
 
-    border-radius: 8px;
+    padding: 16px 30px;
 
-    background: white;
-    color: #2563eb;
+    border-radius: 10px;
+
+    background: #21d85b;
+
+    color: #001b08;
 
     font-size: 16px;
+
     font-weight: bold;
 
     cursor: pointer;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 0 25px rgba(33, 216, 91, 0.25);
 }
+
 
 .hero button:hover {
-    transform: scale(1.05);
+
+    transform: translateY(-3px);
+
+    background: #62ff8a;
+
+    box-shadow:
+        0 0 35px rgba(33, 216, 91, 0.5);
 }
 
 
-/* SEÇÕES */
+/* =========================
+   SEÇÕES
+========================= */
 
 .section {
-    padding: 80px 8%;
+
+    min-height: 500px;
+
+    padding: 100px 8%;
+
     text-align: center;
+
+    background:
+        rgba(0, 0, 0, 0.70);
+
+    border-top:
+        1px solid rgba(98, 255, 138, 0.08);
 }
+
 
 .section h2 {
-    font-size: 35px;
-    margin-bottom: 20px;
+
+    font-size: 40px;
+
+    margin-bottom: 25px;
+
+    color: #62ff8a;
 }
 
 
-/* CARDS */
+.section p {
+
+    color: #ccc;
+
+    font-size: 17px;
+}
+
+
+/* =========================
+   CARDS
+========================= */
 
 .cards {
+
     display: flex;
+
     justify-content: center;
+
+    flex-wrap: wrap;
 
     gap: 25px;
 
-    margin-top: 40px;
-
-    flex-wrap: wrap;
+    margin-top: 50px;
 }
 
+
 .card {
-    background: white;
 
     width: 280px;
 
-    padding: 30px;
+    padding: 35px 25px;
 
-    border-radius: 12px;
+    background:
+        rgba(0, 20, 8, 0.75);
 
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    border:
+
+        1px solid rgba(98, 255, 138, 0.15);
+
+    border-radius: 18px;
+
+    backdrop-filter: blur(10px);
+
+    transition: 0.3s;
 }
 
 
-/* BOTÃO DO CHAT */
+.card:hover {
+
+    transform: translateY(-8px);
+
+    border-color:
+        rgba(98, 255, 138, 0.5);
+
+    box-shadow:
+        0 0 30px rgba(0, 255, 100, 0.12);
+}
+
+
+.card h3 {
+
+    color: #62ff8a;
+
+    margin-bottom: 15px;
+}
+
+
+/* =========================
+   BOTÃO DO CHAT
+========================= */
 
 #chatButton {
 
     position: fixed;
 
-    right: 25px;
-    bottom: 25px;
+    right: 30px;
+
+    bottom: 30px;
 
     width: 65px;
+
     height: 65px;
 
     border-radius: 50%;
 
-    border: none;
+    border: 1px solid rgba(98, 255, 138, 0.5);
 
-    background: #2563eb;
+    background:
+        linear-gradient(
+            135deg,
+            #21d85b,
+            #087f32
+        );
 
     color: white;
 
@@ -163,29 +338,48 @@ nav a:hover {
 
     cursor: pointer;
 
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    box-shadow:
+        0 0 30px rgba(0, 255, 100, 0.25);
+
+    transition: 0.3s;
 
     z-index: 1000;
 }
 
 
-/* JANELA DO CHAT */
+#chatButton:hover {
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 0 40px rgba(0, 255, 100, 0.5);
+}
+
+
+/* =========================
+   JANELA DO CHAT
+========================= */
 
 #chatWindow {
 
     position: fixed;
 
-    right: 25px;
-    bottom: 105px;
+    right: 30px;
 
-    width: 350px;
-    height: 500px;
+    bottom: 110px;
 
-    background: white;
+    width: 390px;
 
-    border-radius: 15px;
+    height: 580px;
 
-    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    background:
+        rgba(3, 10, 6, 0.94);
+
+    border:
+
+        1px solid rgba(98, 255, 138, 0.25);
+
+    border-radius: 20px;
 
     overflow: hidden;
 
@@ -193,17 +387,30 @@ nav a:hover {
 
     flex-direction: column;
 
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 20px 70px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(0, 255, 100, 0.08);
+
     z-index: 999;
 }
 
 
-/* CABEÇALHO */
+/* =========================
+   CABEÇALHO DO CHAT
+========================= */
 
 .chat-header {
 
-    height: 65px;
+    min-height: 70px;
 
-    background: #2563eb;
+    background:
+        linear-gradient(
+            135deg,
+            #087f32,
+            #052b14
+        );
 
     color: white;
 
@@ -214,15 +421,31 @@ nav a:hover {
     justify-content: space-between;
 
     padding: 15px 20px;
+
+    border-bottom:
+        1px solid rgba(98, 255, 138, 0.15);
 }
+
 
 .chat-header strong {
+
     display: block;
+
+    font-size: 17px;
 }
 
+
 .chat-header span {
+
+    display: block;
+
+    margin-top: 3px;
+
     font-size: 12px;
+
+    color: #8cffaa;
 }
+
 
 .chat-header button {
 
@@ -232,13 +455,15 @@ nav a:hover {
 
     color: white;
 
-    font-size: 30px;
+    font-size: 28px;
 
     cursor: pointer;
 }
 
 
-/* MENSAGENS */
+/* =========================
+   MENSAGENS
+========================= */
 
 .messages {
 
@@ -248,42 +473,62 @@ nav a:hover {
 
     overflow-y: auto;
 
-    background: #f3f4f6;
+    background:
+        rgba(0, 0, 0, 0.35);
 }
+
 
 .message {
 
-    max-width: 80%;
+    max-width: 82%;
 
-    padding: 12px 15px;
+    padding: 13px 16px;
 
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 
-    border-radius: 12px;
+    border-radius: 15px;
 
-    line-height: 1.4;
+    line-height: 1.45;
+
+    font-size: 14px;
 }
+
 
 .support {
 
-    background: white;
+    background:
+        rgba(255, 255, 255, 0.07);
 
-    border: 1px solid #ddd;
+    color: #eee;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
 
     margin-right: auto;
 }
 
+
 .user {
 
-    background: #2563eb;
+    background:
+        linear-gradient(
+            135deg,
+            #21d85b,
+            #087f32
+        );
 
     color: white;
 
     margin-left: auto;
+
+    box-shadow:
+        0 5px 15px rgba(0, 255, 100, 0.12);
 }
 
 
-/* INPUT */
+/* =========================
+   CAMPO DE MENSAGEM
+========================= */
 
 .chat-input {
 
@@ -291,73 +536,163 @@ nav a:hover {
 
     padding: 12px;
 
-    border-top: 1px solid #ddd;
+    gap: 8px;
 
-    background: white;
+    border-top:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    background:
+        rgba(0, 0, 0, 0.55);
 }
+
 
 .chat-input input {
 
     flex: 1;
 
-    border: 1px solid #ddd;
+    border:
+        1px solid rgba(98, 255, 138, 0.18);
 
-    border-radius: 8px;
+    border-radius: 10px;
 
-    padding: 12px;
+    padding: 13px;
 
     outline: none;
-}
 
-.chat-input button {
-
-    width: 45px;
-
-    margin-left: 8px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #2563eb;
+    background:
+        rgba(255, 255, 255, 0.06);
 
     color: white;
 
-    cursor: pointer;
-
-    font-size: 18px;
+    font-size: 14px;
 }
 
 
-/* CELULAR */
+.chat-input input::placeholder {
+
+    color: #888;
+}
+
+
+.chat-input input:focus {
+
+    border-color:
+        rgba(98, 255, 138, 0.5);
+}
+
+
+.chat-input button {
+
+    width: 48px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        #21d85b;
+
+    color: #001b08;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+
+.chat-input button:hover {
+
+    background:
+        #62ff8a;
+
+    transform: scale(1.04);
+}
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+
+    width: 7px;
+}
+
+
+::-webkit-scrollbar-track {
+
+    background: #020603;
+}
+
+
+::-webkit-scrollbar-thumb {
+
+    background: #126d31;
+
+    border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+
+    background: #21d85b;
+}
+
+
+/* =========================
+   CELULAR
+========================= */
 
 @media (max-width: 600px) {
 
     header {
+
         padding: 0 20px;
     }
 
+
     nav {
+
         display: none;
     }
 
-    .hero h1 {
-        font-size: 35px;
+
+    .hero {
+
+        padding-top: 100px;
     }
+
+
+    .hero-content {
+
+        padding: 35px 20px;
+
+        width: 100%;
+    }
+
 
     #chatWindow {
 
         right: 10px;
+
         bottom: 90px;
 
         width: calc(100% - 20px);
 
-        height: 500px;
+        height: calc(100vh - 110px);
+
+        border-radius: 18px;
     }
+
 
     #chatButton {
 
         right: 15px;
+
         bottom: 15px;
     }
 }
