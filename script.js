@@ -26,7 +26,8 @@ function fecharChat() {
 
 function enviarMensagem() {
 
-    const input = document.getElementById("messageInput");
+    const input =
+        document.getElementById("messageInput");
 
     const texto = input.value.trim();
 
@@ -35,26 +36,30 @@ function enviarMensagem() {
     }
 
 
-    const messages = document.getElementById("messages");
+    const messages =
+        document.getElementById("messages");
 
 
     /* MENSAGEM DO USUÁRIO */
 
-    const userMessage = document.createElement("div");
+    const userMessage =
+        document.createElement("div");
 
-    userMessage.className = "message user";
+    userMessage.className =
+        "message user";
 
-    userMessage.textContent = texto;
+    userMessage.textContent =
+        texto;
 
     messages.appendChild(userMessage);
 
-
     input.value = "";
 
-    messages.scrollTop = messages.scrollHeight;
+    messages.scrollTop =
+        messages.scrollHeight;
 
 
-    /* RESPOSTA AUTOMÁTICA */
+    /* RESPOSTA DO SUPORTE */
 
     setTimeout(function () {
 
@@ -64,10 +69,44 @@ function enviarMensagem() {
         supportMessage.className =
             "message support";
 
-        supportMessage.textContent =
-            "Obrigado pela mensagem! 😊 Um atendente poderá responder você em breve.";
 
-        messages.appendChild(supportMessage);
+        supportMessage.innerHTML = `
+
+            <div class="support-profile">
+
+                <img
+                    src="./atendente.png"
+                    alt="Atendente"
+                >
+
+                <div>
+
+                    <strong>Yuki Support</strong>
+
+                    <span>
+                        Atendente
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="support-text">
+
+                Obrigado pela mensagem! 😊
+
+                <br><br>
+
+                Um de nossos atendentes
+                poderá ajudar você em breve.
+
+            </div>
+        `;
+
+
+        messages.appendChild(
+            supportMessage
+        );
 
         messages.scrollTop =
             messages.scrollHeight;
